@@ -1,0 +1,69 @@
+{% extends 'layout.html' %}
+{% load staticfiles %}
+{% block show %}
+    角色列表
+{% endblock %}
+{% block content %}
+    <div id="permissionManageDiv" style="margin-left: 10px; display: block;">
+        <div>
+            <h4 style="margin-top: 15px;">角色管理</h4>
+            <hr style="margin-top: 5px;"/>
+            <select name="usernamePermission" id="usernamePermission" class="selectpicker" data-live-search="true">
+                {% for role in role_list %}
+                    <option value="{{ role.title }}">{{ role.title }}</option>
+                {% endfor %}
+            </select>
+            <button type="button" id="add_role" onclick="add_role()" value="+增加角色">+增加角色</button>
+            <hr/>
+        </div>
+        <div>
+            <h4 style="margin-top: 15px;">勾选权限</h4>
+            <hr style="margin-top: 5px;"/>
+            <div style="margin-bottom: 10px;">
+                <form action="" method="post" class="form-horizontal">
+                {% for permission in permission_list %}
+                    <label class="checkbox-inline">
+                        <input type="checkbox" id="{{permission.id}}" value="{{permission.title}}" > {{permission.title}}
+                    </label>
+                {% endfor %}
+                </form>
+            </div>
+        </div>
+        <button type="button" id="changePermissionBtn" class="btn btn-default" style="width: 100px; margin-top: 15px;"
+                data-toggle="modal" data-target="#alertTip" data-whatever="重置权限？">提&nbsp;&nbsp;交
+        </button>
+    </div>
+
+{% endblock %}
+{% block js %}
+    <script type="text/javascript" src="{% static 'css/system_permission.css'  %}"></script>
+    <script type="text/javascript" src="{% static 'layer/layer.js' %}"></script>
+    <script>
+    function add_role() {
+        var index = layer.open({
+            title: "新增角色",
+            content: '<div class="text-center" style="margin-top: 20px"><p>请输入新的角色名称</p><p><input id="id_role" type="text"></p></div>',
+            btn :["确定", "取消"],
+            yes:function (index, layero) {
+                role_title = $('#id_role').val();
+                $.ajax({
+                    url: '{% url "system:permission" %}',
+                    type: 'POST',
+                    data: {"role": role_title},
+                    success: function (e) {
+                        if(e=="1"){
+                            parent.location.reload();
+                            layer.msg("good");
+                        }else{
+                            layer.msg("此角色已有，请更换名称")
+                        }
+                    },
+                });
+            },
+            btn2:function (index,layero) {
+                layer.close(index);
+            }
+        });
+    }
+    </script>
+{% endblock %}

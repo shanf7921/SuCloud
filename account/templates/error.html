@@ -1,0 +1,45 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript" src="{% static 'js/jquery.js' %}"></script>
+
+    <script type="text/javascript" src="{% static 'plugins/sweetalert/sweetalert-dev.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'plugins/sweetalert/sweetalert.css' %}">
+</head>
+<body>
+
+
+<div>
+    {#获取错误信息#}
+    <input type="hidden" id="msg" value="{{ msg }}">
+    <input type="hidden" id="url" value="{{ url }}">
+</div>
+
+<script>
+    $(function () {
+        var msg = $("#msg").val();
+        var url = $("#url").val();
+        console.log(msg);
+        console.log(url);
+
+        if (msg.length > 0) {  //判断是否有错误信息
+            swal({
+                title: msg,
+                text: "1秒后自动关闭。",
+                type: 'error',
+                timer: 1000,
+                showConfirmButton: false
+            }, function () {
+                window.location.href = url;  //跳转指定url
+            });
+
+        }
+
+
+    })
+</script>
+</body>
+</html>

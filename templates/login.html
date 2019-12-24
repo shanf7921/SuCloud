@@ -1,0 +1,81 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>登录</title>
+    <script src="{% static 'js/jquery.js' %}"></script>
+    <script src="{% static 'plugins/sweetalert/sweetalert-dev.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'plugins/sweetalert/sweetalert.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+
+</head>
+<body>
+<div style="height: 100px;"></div>
+
+
+<div class="row text-center vertical-middle-sm">
+        <h1>注塑机智能云平台</h1>
+     <form class="form-horizontal" action="/auth/" method="post">
+        <div class="form-group">
+                <label  class="col-md-5 control-label">用户</label>
+                <div class="col-md-6 text-left"><input  type="text" name="username" id="user"></div>
+            </div>
+         <div class="form-group">
+                <label  class="col-md-5 control-label">密码</label>
+                <div class="col-md-6 text-left"><input  type="password" name="password" id="pwd"></div>
+            </div>
+         <input type="button" class="btn btn-primary btn-lg" id="sub" value="登陆">
+    </form>
+</div>
+
+{#<div class="main">#}
+{#    <div class="title-h1">注塑机智能云平台</div>#}
+{#    <form action="/auth/" method="post">#}
+{#        <lable >用户</lable>#}
+{#        <input  type="text" name="username" id="user">#}
+{#        <br>#}
+{#        <lable>密码</lable>#}
+{#        <input  type="password" name="password" id="pwd">#}
+{#        <br>#}
+{#        <input type="button" id="sub" value="登录">#}
+{#    </form>#}
+{#</div>#}
+<script>
+    $("#sub").click(function () {
+        $.ajax({
+            url: "/auth/",
+            type: "post",
+            data: {
+                username: $("#user").val(),
+                password: $("#pwd").val(),
+            },
+            success: function (data) {
+                console.log(data);
+                if (data.code == 1000) { //判断json的状态
+                    swal({
+                        title: '登录成功',
+                        type: 'success',  //展示成功的图片
+                        timer: 500,  //延时500毫秒
+                        showConfirmButton: false  //关闭确认框
+                    }, function () {
+                        window.location.href = "/device/list/";  //跳转
+                    });
+                } else if (data.code == 1002){
+                    swal("登录失败！", data.error,
+                        "error");
+                } else {
+                    swal("登录失败！", data.error,
+                        "error");
+                }
+            },
+            error: function (data) {
+                console.log('登录异常');
+            }
+        })
+
+    });
+
+</script>
+</body>
+</html>

@@ -1,0 +1,19 @@
+{% load staticfiles %}
+<title>登录</title>
+
+<link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+<style>
+    div{
+        margin: 50px;
+    }
+</style>
+
+
+
+{% block content %}
+<div class="row text-center vertical-middle-sm">
+<h3>已经注销登录</h3>
+<h3>你可以重新<a href="{% url 'login' %}">登录</a> </h3>
+</div>
+{% endblock %}
+

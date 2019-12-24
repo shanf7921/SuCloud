@@ -1,0 +1,15 @@
+<div class="static-menu">
+    <a href="">menu.html</a>
+    {% for item in menu_dict.values %}
+        <div class="item">
+            <div class="header">{{ item.title }}</div>
+            <div>不显示</div>
+            <div class="body">
+                {% for node in item.children %}
+                    <a href="{{ node.url }}">{{ node.title }}</a>
+                    <a href="">1234循环两次</a>
+                {% endfor %}
+            </div>
+        </div>
+    {% endfor %}
+</div>

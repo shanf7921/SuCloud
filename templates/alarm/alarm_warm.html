@@ -1,0 +1,74 @@
+{% extends 'layout.html' %}
+{% load staticfiles %}
+ {% block title %}
+报警管理
+ {% endblock %}
+{% block show %}
+    报警规则
+{% endblock %}
+
+{% block content %}
+     <div class="row" style="width: 100%">
+  <table class="table table-hover">
+      <tr>
+          <td></td>
+          <td>序号</td>
+          <td>设备编号</td>
+          <td>循环时间</td>
+          <td>开模时间</td>
+          <td>关模时间</td>
+          <td>储料时间</td>
+          <td>射出时间</td>
+          <td>射退时间</td>
+          <td>转保压时间</td>
+          <td>转保压位置</td>
+          <td>转保压压力</td>
+          <td>一段温度</td>
+          <td>二段温度</td>
+          <td>三段温度</td>
+          <td>四段温度</td>
+          <td>五段温度</td>
+          <td>开模位置</td>
+          <td>射出起点</td>
+          <td>射出终点</td>
+          <td>生产时间</td>
+      </tr>
+      {% for p in perrors %}
+       <tr>
+        <td></td>
+          <td>序号</td>
+          <td>p.t_device.d_num</td>
+          <td>循环时间</td>
+          <td>开模时间</td>
+          <td>关模时间</td>
+          <td>储料时间</td>
+          <td>射出时间</td>
+          <td>射退时间</td>
+          <td>转保压时间</td>
+          <td>转保压位置</td>
+          <td>转保压压力</td>
+          <td>一段温度</td>
+          <td>二段温度</td>
+          <td>三段温度</td>
+          <td>四段温度</td>
+          <td>五段温度</td>
+          <td>开模位置</td>
+          <td>射出起点</td>
+          <td>射出终点</td>
+          <td>生产时间</td>
+      </tr>
+      {% endfor %}
+
+  </table></div>
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,163 @@
+{% load staticfiles %}
+{% load rbac %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>注塑云平台</title>
+    <link rel="shortcut icon" href="{% static 'imgs/zsj-logo.png' %} ">
+    <link rel="stylesheet" href="{% static 'plugins/bootstrap/css/bootstrap.css' %} "/>
+    <link rel="stylesheet" href="{% static 'plugins/font-awesome/css/font-awesome.css' %} "/>
+    <link rel="stylesheet" href="{% static 'css/commons.css' %} "/>
+    <link rel="stylesheet" href="{% static 'css/nav.css' %} "/>
+    <link rel="stylesheet" href="{% static 'css/rbac.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+    <style>
+        body {
+            margin: 0;
+        }
+
+        .no-radius {
+            border-radius: 0;
+        }
+
+        .no-margin {
+            margin: 0;
+        }
+
+        .pg-body > .left-menu {
+            background-color: #EAEDF1;
+            position: absolute;
+            left: 1px;
+            top: 48px;
+            bottom: 0;
+            width: 220px;
+            border: 1px solid #EAEDF1;
+            overflow: auto;
+        }
+
+        .pg-body > .right-body {
+            position: absolute;
+            left: 225px;
+            right: 0;
+            top: 48px;
+            bottom: 0;
+            overflow: scroll;
+            border: 1px solid #ddd;
+            border-top: 0;
+            font-size: 13px;
+            min-width: 755px;
+        }
+
+        .navbar-right {
+            float: right !important;
+            margin-right: -15px;
+        }
+
+        .luffy-container {
+            padding: 15px;
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="pg-header">
+    <div class="nav">
+        <div class="logo-area left">
+            <a href="#">
+                <img class="logo" src="{% static 'imgs/zsj.png' %}">
+                <span style="font-size: 18px;">注塑云平台 </span>
+            </a>
+        </div>
+
+        <div class="left-menu left">
+            <a class="menu-item">设备管理</a>
+            <a class="menu-item">告警信息</a>
+            <a class="menu-item">系统管理</a>
+            <div class="menu-item">
+                <span>使用说明</span>
+                <i class="fa fa-caret-down" aria-hidden="true"></i>
+                <div class="more-info">
+                    <a href="https://www.baidu.com" class="more-item">百度一下</a>
+                    <a href="#" class="more-item">谷歌一下</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="right-menu right clearfix">
+            <!--
+            <div class="user-info right">
+                <a href="#" class="avatar">
+                    <img class="img-circle" src="{% static 'imgs/default.png' %}">
+                </a>
+
+                <div class="more-info">
+                    <a href="#" class="more-item">{{ user.username }}</a>
+                    <a href="{% url 'account:user_logout' %}" class="more-item">注销</a>
+                </div>
+            </div>
+
+            <a class="user-menu right">
+                消息
+                <i class="fa fa-commenting-o" aria-hidden="true"></i>
+                <span class="badge bg-success">2</span>
+            </a>
+
+            <a class="user-menu right">
+                通知
+                <i class="fa fa-envelope-o" aria-hidden="true"></i>
+                <span class="badge bg-success">2</span>
+            </a>
+
+            <a class="user-menu right">
+                任务
+                <i class="fa fa-bell-o" aria-hidden="true"></i>
+                <span class="badge bg-danger">4</span>
+            </a> -->
+
+
+            <a class="user-menu right" href="{% url 'account:user_logout' %}">
+                退出
+            </a>
+            <a class="user-menu right">
+                ID：{{ user.username }}
+            </a>
+            <a class="user-menu right">
+                姓名：{{ user.u_info.first.uname}}
+            </a>
+        </div>
+    </div>
+</div>
+<div class="pg-body">
+    <div class="left-menu">
+        <div class="menu-body">
+            <div class="static-menu">
+                {% menu request %}
+            </div>
+        </div>
+    </div>
+    <div class="right-body">
+        <div>
+            <ol class="breadcrumb no-radius no-margin" style="border-bottom: 1px solid #ddd;">
+                <li><a href="#">首页</a></li>
+                <li class="active">
+                    {% block show %}
+                    
+                    {% endblock %}
+                </li>
+            </ol>
+        </div>
+        {% block content %}
+
+        {% endblock %}
+    </div>
+</div>
+<script src="{% static 'js/jquery.js' %} "></script>
+<script src="{% static 'plugins/bootstrap/js/bootstrap.js' %} "></script>
+<script src="{% static 'rbac/rbac.js' %}"></script>
+{% block js %}
+
+{% endblock %}
+</body>
+</html>

@@ -1,0 +1,153 @@
+{% extends 'layout.html' %}
+{% load staticfiles %}
+ {% block title %}
+device list
+ {% endblock %}
+{% block show %}
+    模具维保
+{% endblock %}
+
+ {% block content %}
+     <div class="row" style="width: 100%">
+  <table class="table table-hover">
+      <tr>
+          <td></td>
+          <td>序号</td>
+          <td>模具编号</td>
+          <td>模具名称</td>
+
+          <td>模具状态</td>
+          <td>维护人员</td>
+          <td>操作</td>
+      </tr>
+      {% for mold in molds %}
+      <tr>
+          <td></td>
+          <td>{{ forloop.counter }}</td>
+          <td>{{ mold.m_num }}</td>
+          <td id="{{ mold.id }}">{{ mold.m_name }}</td>
+
+          <td>{{ mold.get_m_status_display }}</td>
+          <td>{{ mold.m_user.uname }}</td>
+          <td><a href="javascript:" name="mold_repair" onclick="mold_repair(this, {{ mold.id }})">
+                 <span class="" style="margin-left: 20px">维修</span>
+                </a>
+              <a href="javascript:" name="mold_maintain" onclick="mold_maintain(this, {{ mold.id }})">
+                 <span class="" style="margin-left: 20px">保养</span>
+                </a>
+              <a href="javascript:" name="mold_end" onclick="mold_end(this, {{ mold.id }})">
+                 <span class="" style="margin-left: 20px">结束</span>
+                </a>
+          </td>
+      </tr>
+      {% endfor %}
+  </table>
+
+  </div>
+     <br>
+     <script type="text/javascript" src="{% static 'js/jquery.js' %}"></script>
+     <script type="text/javascript" src="{% static 'layer/layer.js' %}"></script>
+        <script type="text/javascript">
+        function mold_repair(the, mold_id) {
+        var name = $(mold_id).parent("tr").children("td").eq(3).text();
+        layer.open({
+            title: "维修模具",
+            content: '<div class="text-center" style="margin-top: 20px"><p>是否确定开始维修{'+name+'}模具</p></div>',
+            btn :["确定", "取消"],
+            yes:function () {
+                $.ajax({
+                    url: "{% url "account:mold_repair" %}",
+                    type: "POST",
+                    data: {"mold_id": mold_id},
+                    success: function (e){
+                        if(e=="1"){
+                            parent.location.reload();
+                            layer.msg("开始维修");
+                        }else{
+                            layer.msg("失败")
+                        }
+                    },
+                });
+            },
+            btn2:function () {
+                layer.close();
+            }
+        });
+
+    }
+
+
+    function mold_maintain(the, mold_id) {
+        var name = $(mold_id).parent("tr").children("td").eq(3).text;
+
+        layer.open({
+            title: "维修模具",
+            content: '<div class="text-center" style="margin-top: 20px"><p>是否确定开始保养模具</p></div>',
+            btn :["确定", "取消"],
+            yes:function () {
+                $.ajax({
+                    url: "{% url "account:mold_maintain" %}",
+                    type: "POST",
+                    data: {"mold_id": mold_id},
+                    success: function (e){
+                        if(e=="1"){
+                            parent.location.reload();
+                            layer.msg("开始保养");
+                        }else{
+                            layer.msg("失败")
+                        }
+                    },
+                });
+            },
+            btn2:function () {
+                layer.close();
+            }
+        });
+
+    }
+
+
+    function mold_end(the, mold_id) {
+        var name = $(mold_id).parent("tr").children("td").eq(4).text();
+        layer.open({
+            title: "结束维修/保养",
+            content: '<div class="text-center" style="margin-top: 20px"><p>是否结束</p></div>',
+            btn :["确定", "取消"],
+            yes:function () {
+                $.ajax({
+                    url: "{% url "account:mold_end" %}",
+                    type: "POST",
+                    data: {"mold_id": mold_id},
+                    success: function (e){
+                        if(e=="1"){
+                            parent.location.reload();
+                            layer.msg("操作成功");
+                        }else{
+                            layer.msg("操作失败")
+                        }
+                    },
+                });
+            },
+            btn2:function () {
+                layer.close();
+            }
+        });
+
+    }
+        </script>
+ {% endblock %}
+{% block js %}
+
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
