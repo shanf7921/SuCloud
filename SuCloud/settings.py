@@ -39,6 +39,10 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'account',
     'device',
+    'rbac',
+    'mold',
+    'alarm',
+    'produce',
 ]
 
 MIDDLEWARE = [
@@ -49,6 +53,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'rbac.middleware.rbac.RbacMiddleware',
+    # 'account.middlewares.AuthMD',
 ]
 
 ROOT_URLCONF = 'SuCloud.urls'
@@ -128,3 +134,28 @@ STATICFILES_DIRS = [
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
+
+PERMISSION_SESSION_KEY = "permission_list"
+MENU_SESSION_KEY = "menu_list"
+VALID_URL = [
+    '^/auth/',
+    '^/login/$',
+    '^/account/.*',
+    '^/admin/.*',
+    '^/account/logout/$',
+    '/favicon.ico',
+]
+
+
+EMAIL_HOST = 'smtp.qq.com'
+EMAIL_HOST_USER = "2106398886@qq.com"
+EMAIL_HOST_PASSWORD = "erzhjujzkumzdgia"
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+DEFAULT_FROM_EMAIL = "2106398886@qq.com"
+# 邮件内容直接输出到控制台，部署网站时删掉此行代码
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+REDIS_HOST = 'localhost'
+REDIS_PORT = 6379
+REDIS_DB = 0

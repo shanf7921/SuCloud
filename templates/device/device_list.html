@@ -1,11 +1,17 @@
- {% extends 'base.html' %}
+ {% extends 'layout.html' %}
+{% load staticfiles %}
  {% block title %}
 device list
  {% endblock %}
+{% block show %}
+    设备列表
+{% endblock %}
+
  {% block content %}
-  <div class="row">
+     <div class="row" style="width: 100%">
   <table class="table table-hover">
       <tr>
+          <td></td>
           <td>序号</td>
           <td>设备编号</td>
           <td>设备品牌</td>
@@ -16,20 +22,52 @@ device list
       </tr>
       {% for device in devices %}
       <tr>
+          <td></td>
           <td>{{ forloop.counter }}</td>
           <td>{{ device.d_num }}</td>
           <td>{{ device.d_brank }}</td>
           <td>{{ device.d_name }}</td>
           <td>{{ device.get_d_status_display }}</td>
           <td>{{ device.d_created }}</td>
-          <td><a href="javascript:" name="delete" onclick="del_device(this, {{ device.id }})">
+          <td><a href="javascript:" name="del_device" onclick="del_device(this, {{ device.id }})">
             <span class="glyphicon glyphicon-trash" style="margin-left: 20px"></span></a></td>
       </tr>
       {% endfor %}
-      
-
   </table>
   </div>
+     <script type="text/javascript" src="{% static 'js/jquery.js' %}"></script>
+     <script type="text/javascript" src="{% static 'layer/layer.js' %}"></script>
+     <script type="text/javascript">
+        function del_device(the, device_id) {
+        var name = $(device_id).parent("tr").children("td").eq(3).text();
+        layer.open({
+            title: "删除设备",
+            content: '<div class="text-center" style="margin-top: 20px"><p>是否确定删除{'+name+'}设备</p></div>',
+            btn :["确定", "取消"],
+            yes:function () {
+                $.ajax({
+                    url: "{% url "account:del_device" %}",
+                    type: "POST",
+                    data: {"device_id": device_id},
+                    success: function (e){
+                        if(e=="1"){
+                            parent.location.reload();
+                            layer.msg("删除成功");
+                        }else{
+                            layer.msg("删除失败")
+                        }
+                    },
+                });
+            },
+            btn2:function () {
+                layer.close();
+            }
+        });
+
+    }
+    </script>
+
+
  {% endblock %}
 
 
