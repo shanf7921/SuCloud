@@ -1,0 +1,198 @@
+{% extends 'layout.html' %}
+{% load staticfiles %}
+ {% block title %}
+报警管理
+ {% endblock %}
+{% block show %}
+    报警规则
+{% endblock %}
+
+ {% block content %}
+     <div class="row" style="width: 100%">
+  <table class="table table-hover">
+      <tr>
+          <td></td>
+          <td>序号</td>
+          <td>设备编号</td>
+          <td>时间</td>
+          <td>温度</td>
+          <td>位置</td>
+          <td>压力</td>
+          <td>提醒</td>
+          <td>删除</td>
+      </tr>
+      {% for rule in rules %}
+      <tr>
+          <td></td>
+          <td>{{ forloop.counter }}</td>
+          <td>{{ rule.t_device }}</td>
+          <td>{% if rule.e_time is None %}{% else %}{{ rule.e_time }}{% endif %} </td>
+          <td>{% if rule.e_tem is None %}{% else %}{{ rule.e_tem }}{% endif %} </td>
+          <td>{% if rule.e_place is None %}{% else %}{{ rule.e_place }}{% endif %}</td>
+          <td>{% if rule.e_pressure is None %}{% else %}{{ rule.e_pressure }}{% endif %}</td>
+          <td>{{ rule.e_remind }}</td>
+          <td><a href="javascript:" id="td{{ rule.id }}" name="del_rule" onclick="del_rule(this, {{ rule.id }})">
+            <span class="glyphicon glyphicon-trash" style="margin-left: 20px"></span></a></td>
+      </tr>
+      {% endfor %}
+  </table>
+  </div>
+     <button type="button" id="add-rule-btn"  onclick="add_rule()" value="">新增规则</button>
+        <br>
+     <script type="text/javascript" src="{% static 'js/jquery.js' %}"></script>
+     <script type="text/javascript" src="{% static 'layer/layer.js' %}"></script>
+     <script type="text/javascript">
+        function del_rule(the, rule_id) {
+        var name = $(the).parent("td").parent("tr").children("td").eq(2).text();
+        console.log(name)
+        layer.open({
+            title: "删除规则",
+            content: '<div class="text-center" style="margin-top: 20px"><p>是否确定删除'+name+'规则</p></div>',
+            btn :["确定", "取消"],
+            yes:function () {
+                $.ajax({
+                    url: "{% url "account:del_rule" %}",
+                    type: "POST",
+                    data: {"rule_id": rule_id},
+                    success: function (e){
+                        if(e=="1"){
+                            parent.location.reload();
+                            layer.msg("删除成功");
+                        }else{
+                            layer.msg("删除失败")
+                        }
+                    },
+                });
+            },
+            btn2:function () {
+                layer.close();
+            }
+        });
+
+    }
+    </script>
+     <script type="text/javascript">
+     function add_rule() {
+         var name = "DE03#"
+         layer.open({
+             type: 1,
+             title: "规则",
+             skin: 'layui-layer-rim', //加上边框
+             area: ['400px', '350px'], //宽高
+             content: `
+              <form class="layui-form" action="">
+                  <div class="layui-form-item" style="margin-top:5px">
+                    <label class="layui-form-label" style="float: left; margin-left:20px; margin-right: 20px" >编号</label>
+                    <div class="layui-input-block" >
+                      <input type="text" id="t_device" name="t_device"  placeholder="请输入设备编号" autocomplete="off" class="layui-input">
+                    </div>
+                  </div>
+                   <div class="layui-form-item" style="margin-top:5px">
+                    <label class="layui-form-label" style="float: left; margin-left:20px; margin-right: 20px" >编号</label>
+                    <div class="layui-input-block" >
+                      <select name="" id="" class="layui-select">
+                        <option value="">DE01#</option>
+                        <option value="">DE02#</option>
+                         <option value=""> `+name+` </option>
+                        </select> 
+                      </div>
+                  </div>
+
+                  <div class="layui-form-item" style="margin-top:5px">
+                    <label class="layui-form-label" style="float: left; margin-left:20px; margin-right: 20px" >时间</label>
+                    <div class="layui-input-block" >
+                      <input type="text" id="e_time" name="e_time"  placeholder="请输入时间允许波动值" autocomplete="off" class="layui-input">
+                    </div>
+                  </div>
+                  <div class="layui-form-item" style="margin-top:5px">
+                    <label class="layui-form-label" style="float: left; margin-left:20px; margin-right: 20px" >温度</label>
+                    <div class="layui-input-block" >
+                      <input type="text" id="e_tem" name="e_tem"  placeholder="请输入温度允许波动值" autocomplete="off" class="layui-input">
+                    </div>
+                  </div>
+                    <div class="layui-form-item" style="margin-top:5px">
+                    <label class="layui-form-label" style="float: left; margin-left:20px; margin-right: 20px" >位置</label>
+                    <div class="layui-input-block" >
+                      <input type="text" id="e_place" name="e_place"  placeholder="请输入位置允许波动值" autocomplete="off" class="layui-input">
+                    </div>
+                  </div>
+                  <div class="layui-form-item" style="margin-top:5px">
+                    <label class="layui-form-label" style="float: left; margin-left:20px; margin-right: 20px" >压力</label>
+                    <div class="layui-input-block" >
+                      <input type="text" id="e_pressure" name="e_pressure"  placeholder="请输入压力允许波动值" autocomplete="off" class="layui-input">
+                    </div>
+                  </div>
+                  <div class="layui-form-item" style="margin-top:5px">
+                    <label class="layui-form-label" style="float: left; margin-left:20px; margin-right: 20px">通知</label>
+                        <div class="layui-input-block" >
+                          <textarea id="e_remind" name="e_remind" placeholder="请输入需要通知的邮箱，多个邮箱以逗号(，)间隔" class="layui-textarea"></textarea>
+                        </div>
+                  </div>
+                  <div class="layui-form-item">
+                    <div class="layui-input-block">
+                      <button type="reset" class="layui-btn layui-btn-primary" style="margin-left:20px">重置</button>
+                    </div>
+                  </div>
+
+              </form>
+             `,
+             btn :["确定", "取消"],
+                yes:function () {
+                 var t_device = $("#t_device").val();
+                 var e_time = $("#e_time").val();
+                 var e_tem = $("#e_tem").val();
+                 var e_place = $("#e_place").val();
+                 var e_pressure = $("#e_pressure").val();
+                 var e_remind = $("#e_remind").val();
+
+                 console.log(e_time,e_tem);
+                 var data = {"t_device": t_device, "e_time": e_time, "e_tem": e_tem, "e_place": e_place, "e_pressure": e_pressure, "e_remind":e_remind}
+                $.ajax({
+                    url: "{% url "account:add_rule" %}",
+                    type: "POST",
+                    data: {"data": data},
+                    success: function (e){
+                        if(e=="1"){
+                            parent.location.reload();
+                            layer.msg("添加成功");
+                        }else{
+                            layer.msg("添加失败")
+                        }
+                    },
+
+                });
+            },
+                btn2:function () {
+                layer.close();
+            }
+
+         });
+     }
+     </script>
+
+
+ {% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

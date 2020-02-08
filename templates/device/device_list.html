@@ -8,6 +8,10 @@ device list
 {% endblock %}
 
  {% block content %}
+     <div>
+        <button type="button" id="add-mold-btn" value="" style="margin-left: 10px" onclick="add_device()">增加</button>
+        <br>
+    </div>
      <div class="row" style="width: 100%">
   <table class="table table-hover">
       <tr>
@@ -30,19 +34,21 @@ device list
           <td>{{ device.get_d_status_display }}</td>
           <td>{{ device.d_created }}</td>
           <td><a href="javascript:" name="del_device" onclick="del_device(this, {{ device.id }})">
-            <span class="glyphicon glyphicon-trash" style="margin-left: 20px"></span></a></td>
+            <span class="glyphicon glyphicon-trash" style="margin-left: 20px"></span></a>
+          </td>
       </tr>
       {% endfor %}
   </table>
   </div>
      <script type="text/javascript" src="{% static 'js/jquery.js' %}"></script>
      <script type="text/javascript" src="{% static 'layer/layer.js' %}"></script>
+     <script type="text/javascript" src="{% static 'laydate/laydate.js' %}"></script>
      <script type="text/javascript">
         function del_device(the, device_id) {
-        var name = $(device_id).parent("tr").children("td").eq(3).text();
+        var name = $(the).parent("td").parent("tr").children("td").eq(2).text();
         layer.open({
             title: "删除设备",
-            content: '<div class="text-center" style="margin-top: 20px"><p>是否确定删除{'+name+'}设备</p></div>',
+            content: '<div class="text-center" style="margin-top: 20px"><p>是否确定删除'+name+'设备</p></div>',
             btn :["确定", "取消"],
             yes:function () {
                 $.ajax({
@@ -66,7 +72,62 @@ device list
 
     }
     </script>
+     <script type="text/javascript">
+     function add_device() {
+            layer.open({
+                type: 1,
+                title: "新增设备",
+                zIndex: 100,
+                skin: 'layui-layer-rim', //加上边框
+                area: ['600px', '300px'], //宽高
+                content: `{% include 'device/add_device.html' %}
+             `,
+                success: function () {
+                    laydate.render({
+                        elem: '#device_date' //指定元素
+                        , type: 'datetime'
+                    });
+                },
+                btn: ["确定", "取消"],
+                yes: function () {
+                    var device_num = $("#device_num").val();
+                    var device_model = $("#device_model").val();
+                    var device_brank = $("#device_brank").val();
+                    var device_name = $("#device_name").val();
+                    var device_date = $("#device_date").val();
+                    var device_user = $("#device_user").find("option:selected").text();
+                    var data = {
+                        "device_num": device_num,
+                        "device_model": device_model,
+                        "device_brank": device_brank,
+                        "device_name": device_name,
+                        "device_date": device_date,
+                        "device_user": device_user,
+                    }
+                    $.ajax({
+                        url: "{% url "account:add_device" %}",
+                        type: "POST",
+                        data: {"data": data},
+                        success: function (e) {
+                            if (e == "1") {
+                                parent.location.reload();
+                                layer.msg("添加成功");
+                            } else if(e=='0'){
+                                layer.msg("工单号已存在")
+                            }else {
+                                layer.msg("添加失败")
+                            }
+                        },
 
+                    });
+                },
+                btn2: function () {
+                    layer.close();
+                }
+
+            });
+        }
+     </script>
 
  {% endblock %}
 

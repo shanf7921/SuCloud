@@ -15,122 +15,46 @@ device list
           <td>序号</td>
           <td>模具编号</td>
           <td>模具名称</td>
-          <td>模腔数</td>
-          <td>模具寿命</td>
-          <td>生产模数</td>
-          <td>模具状态</td>
-          <td>维护人员</td>
-          <td>操作</td>
+          <td>维保人员</td>
+          <td>故障现象</td>
+          <td>处理方法</td>
+          <td>开始时间</td>
+          <td>结束时间</td>
+          <td>备注</td>
       </tr>
-      {% for mold in molds %}
+      {% for mold in mold_records %}
       <tr>
           <td></td>
           <td>{{ forloop.counter }}</td>
-          <td>{{ mold.m_num }}</td>
-          <td>{{ mold.m_name }}</td>
-          <td>{{ mold.m_count }}</td>
-          <td>{{ mold.m_life }}</td>
-          <td>{{ mold.m_product }}</td>
-          <td>{{ mold.get_m_status_display }}</td>
-          <td>{{ mold.m_user.uname }}</td>
-          <td><a href="javascript:" name="del_mold" onclick="del_mold(this, {{ mold.id }})">
-            <span class="glyphicon glyphicon-trash" style="margin-left: 20px"></span></a></td>
+          <td>{{ mold.mr_num}}</td>
+          <td>{{ mold.mr_name }}</td>
+          <td>{{ mold.mr_user }}</td>
+          <td>{{ mold.mr_appear }}</td>
+          <td>{{ mold.mr_method }}</td>
+          <td>{{ mold.mr_start }}</td>
+          <td>{% if mold.mr_end is None %}未结束{% else %}{{ mold.mr_end }}{% endif %}</td>
+          <td>{{ mold.mr_des }}</td>
       </tr>
       {% endfor %}
   </table>
 
   </div>
      <br>
-     <button type="button" id="add-mold-btn"  value="" style="margin-left: 10px" onclick="addMold()">新增模具</button>
-     <div class="container" id="add-mold-div" style="display: none; width: 400px">
-        <form class="form-horizontal" action="{% url 'mold:mold_list' %}" method="post">
-            {% csrf_token %}
-
-            <div class="form-group">
-                <label for="{{ form.m_num.id_for_label }}" class="col-md-5 control-label">
-                    模具编号
-                </label>
-                <div class="col-md-6 text-left">{{ form.m_num }}</div>
-            </div>
-            <div class="form-group">
-                <label for="{{ form.m_name.id_for_label }}" class="col-md-5 control-label">
-                    模具名称
-                </label>
-                <div class="col-md-6 text-left">{{ form.m_name }}</div>
-            </div>
-            <div class="form-group">
-                <label for="{{ form.m_count.id_for_label }}" class="col-md-5 control-label">
-                    模腔数
-                </label>
-                <div class="col-md-6 text-left">{{ form.m_count }}</div>
-            </div>
-            <div class="form-group">
-                <label for="{{ form.m_life.id_for_label }}" class="col-md-5 control-label">
-                    模具寿命
-                </label>
-                <div class="col-md-6 text-left">{{ form.m_life }}</div>
-            </div>
-            <div class="form-group">
-                <label for="{{ form.m_product.id_for_label }}" class="col-md-5 control-label">
-                    生产模数
-                </label>
-                <div class="col-md-6 text-left">{{ form.m_product }}</div>
-            </div>
-
-            <div class="form-group">
-                <label for="{{ form.m_status.id_for_label }}" class="col-md-5 control-label">
-                    模具状态
-                </label>
-                <div class="col-md-6 text-left">{{ form.m_status }}</div>
-            </div>
-            <div class="form-group">
-                <label for="{{ form.m_user.id_for_label }}" class="col-md-5 control-label">
-                    维护人员
-                </label>
-                <div class="col-md-6 text-left">{{ form.m_user }}</div>
-            </div>
-
-            <input type="submit" class="btn btn-primary btn-lg" value="确认">
-            <input type="button" id="add-mold-quit" class="btn btn-primary btn-lg navbar-right" value="取消">
-        </form>
-    </div>
-
 
 
      <script type="text/javascript" src="{% static 'js/jquery.js' %}"></script>
      <script type="text/javascript" src="{% static 'layer/layer.js' %}"></script>
-        <script type="text/javascript">
-        function del_mold(the, mold_id) {
-        var name = $(mold_id).parent("tr").children("td").eq(3).text();
-        layer.open({
-            title: "删除模具",
-            content: '<div class="text-center" style="margin-top: 20px"><p>是否确定删除{'+name+'}模具</p></div>',
-            btn :["确定", "取消"],
-            yes:function () {
-                $.ajax({
-                    url: "{% url "account:del_mold" %}",
-                    type: "POST",
-                    data: {"mold_id": mold_id},
-                    success: function (e){
-                        if(e=="1"){
-                            parent.location.reload();
-                            layer.msg("删除成功");
-                        }else{
-                            layer.msg("删除失败")
-                        }
-                    },
-                });
-            },
-            btn2:function () {
-                layer.close();
-            }
-        });
+     <script type="text/javascript">
+     $(document).ready(function () {
+             $('tr').children("td").eq(4).each(function(){
+                 console.log($(this).html())
 
-    }
-        </script>
+             });
+         })
+     </script>
  {% endblock %}
 {% block js %}
-    <script src="{% static 'js/mold_list.js' %}"></script>
+
 {% endblock %}
 
 

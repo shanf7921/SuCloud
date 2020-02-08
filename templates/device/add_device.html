@@ -1,0 +1,72 @@
+<div class="panel window">
+
+    <div>
+        <form action="">
+            <table style="border-collapse:separate; border-spacing:0px 10px;">
+                <tbody>
+                <tr style="">
+                    <th style="width:85px;overflow:hidden;noWrap:true">
+                        <lable style="float:right;width:90px;text-align:right">设备编号</lable>
+                    </th>
+                    <td><span style="width: 149px; height: 20px;">
+                        <input type="text" id="device_num" placeholder="DE180#">
+                        <span></span>
+                    </span>
+
+                    </td>
+                    <th style="width:85px;overflow:hidden;noWrap:true">
+                        <lable style="float:right;width:90px;text-align:right">设备型号</lable>
+                    </th>
+                    <td><span style="width: 149px; height: 20px;">
+                        <input type="text" id="device_model" placeholder="DE180">
+                        <span></span>
+                        </span>
+                    </td>
+                </tr>
+                <tr style="margin-bottom: 10px">
+                    <th style="width:85px;overflow:hidden;noWrap:true">
+                        <lable style="float:right;width:90px;text-align:right">设备品牌</lable>
+                    </th>
+                    <td>
+                        <input type="text" id="device_brank" placeholder="TR/HT/...">
+                        <span></span>
+                    </td>
+                    <th style="width:85px;overflow:hidden;noWrap:true">
+                        <lable style="float:right;width:90px;text-align:right">设备名称</lable>
+                    </th>
+                    <td>
+                        <input type="text" id="device_name" placeholder="全电机/二板机/...">
+                        <span></span>
+                    </td>
+                </tr>
+                <tr>
+                    <th style="width:85px;overflow:hidden;noWrap:true">
+                        <lable style="float:right;width:90px;text-align:right">添加日期</lable>
+                    </th>
+                    <td>
+                        <input type="text" id="device_date">
+                        <span></span>
+                    </td>
+                    <th style="width:85px;overflow:hidden;noWrap:true">
+                        <lable style="float:right;width:90px;text-align:right">添加人员</lable>
+                    </th>
+                    <td>
+                        <select name="device_user" id="device_user"  onmousedown="if(this.options.length>5){this.size=4}" onblur="this.size=0"
+                                    onchange="this.size=0" style="z-index: 1;width:170px;position: absolute;top:88px">
+                                <option value="">请选择</option>
+                                {% for user in users %}
+                                    <option value="">{{ user.uname }}</option>
+                                {% endfor %}
+                            </select>
+                        <span>
+                        </span>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </form>
+    </div>
+</div>
+
+
+

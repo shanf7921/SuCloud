@@ -39,4 +39,8 @@ class RbacMiddleware(MiddlewareMixin):
                 flag = True
                 break
         if not flag:
-            return HttpResponse('无权访问')
+            if permission_list:
+                url = permission_list[0]['permissions_url']
+                return redirect(url)
+            else:
+                return HttpResponse('无权访问')

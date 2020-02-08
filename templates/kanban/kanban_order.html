@@ -1,0 +1,79 @@
+{% extends 'layout.html' %}
+{% load staticfiles %}
+{% block title %}
+    订单看板
+{% endblock %}
+{% block extCSS %}
+    <link rel="stylesheet" href="{% static 'css/kanban/order_card.css' %}">
+{% endblock %}
+{% block show %}
+    订单看板
+{% endblock %}
+
+{% block content %}
+    <div>
+        {% for order in orders %}
+            <div class="cardBox" style="width: 270px">
+                <div class="headerBox" style="">
+                    <span style="float:left;color: black">{{ order.o_name }}
+                    </span>
+                    {% if  order.get_o_status_display == '未分配' %}
+                        <span name="order_status" style="float: right" class="label label-primary">
+                          {{ order.get_o_status_display }}
+                     </span>
+                    {% elif order.get_o_status_display == '未开始' %}
+                        <span name="order_status" style="float: right" class="label label-warning">
+                          {{ order.get_o_status_display }}
+                     </span>
+                    {% elif order.get_o_status_display == '暂停中' %}
+                        <span name="order_status" style="float: right" class="label label-default">
+                          {{ order.get_o_status_display }}
+                     </span>
+                    {% elif order.get_o_status_display == '生产中' %}
+                        <span name="order_status" style="float: right" class="label label-success">
+                          {{ order.get_o_status_display }}
+                     </span>
+                    {% elif order.get_o_status_display == '已完成' %}
+                        <span name="order_status" style="float: right" class="label label-danger">
+                          {{ order.get_o_status_display }}
+                     </span>
+                    {% endif %}
+
+                </div>
+                <div class="bodyBox">
+                    <span style="float: left">订单号：{{ order.o_id }}</span><br>
+                    <span style="float: left">创建时间：{{ order.o_create|date:"Y-m-d" }}</span><br>
+                    <span style="float: left">交货时间：{{ order.o_end }}</span><br>
+                    <span style="float: left"><span class="glyphicon glyphicon-user"></span>：{{ order.o_customer }}</span>
+                    <span style="float: right"><span class="glyphicon glyphicon-time"></span>：{{ order.o_day }}天</span><br>
+                    <div class="progress" style="width: 80%;float: left">
+                        <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40"
+                             aria-valuemin="0" aria-valuemax="100"
+                             style="width:{% widthratio order.o_finish order.o_count 100 %}%">
+                            <span class="sr-only">{% widthratio order.o_finish order.o_count 100 %}% Complete (success)</span>
+                        </div>
+                    </div>
+                    <span style="float: right">{% widthratio order.o_finish order.o_count 100 %}%</span>
+
+
+                </div>
+            </div>
+        {% endfor %}
+
+    </div>
+    <script type="text/javascript" src="{% static 'js/jquery.js' %}"></script>
+
+
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+

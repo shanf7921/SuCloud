@@ -1,0 +1,55 @@
+<form class="layui-form" action="">
+
+    <div class="layui-form-item" style="margin-top:5px">
+        <label class="layui-form-label" style="float: left; margin-left:20px; margin-right: 20px">编号</label>
+        <div class="layui-input-block">
+            <select name="t_device" id="t_device" class="layui-select" onmousedown="if(this.options.length>5){this.size=4}" onblur="this.size=0" onchange="this.size=0" style="z-index: 1;width: 150px;position: absolute">
+                <option value="" >请选择</option>
+                {% for device in devices %}
+                    <option value="" >{{ device.d_num }}</option>
+                {% endfor %}
+            </select>
+        </div>
+    </div>
+    <br>
+    <div class="layui-form-item" style="margin-top:5px">
+        <label class="layui-form-label" style="float: left; margin-left:20px; margin-right: 20px">时间</label>
+        <div class="layui-input-block">
+            <input type="text" id="e_time" name="e_time" placeholder="请输入时间允许波动值" autocomplete="off"
+                   class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item" style="margin-top:5px">
+        <label class="layui-form-label" style="float: left; margin-left:20px; margin-right: 20px">温度</label>
+        <div class="layui-input-block">
+            <input type="text" id="e_tem" name="e_tem" placeholder="请输入温度允许波动值" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item" style="margin-top:5px">
+        <label class="layui-form-label" style="float: left; margin-left:20px; margin-right: 20px">位置</label>
+        <div class="layui-input-block">
+            <input type="text" id="e_place" name="e_place" placeholder="请输入位置允许波动值" autocomplete="off"
+                   class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item" style="margin-top:5px">
+        <label class="layui-form-label" style="float: left; margin-left:20px; margin-right: 20px">压力</label>
+        <div class="layui-input-block">
+            <input type="text" id="e_pressure" name="e_pressure" placeholder="请输入压力允许波动值" autocomplete="off"
+                   class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item" style="margin-top:5px">
+        <label class="layui-form-label" style="float: left; margin-left:20px; margin-right: 20px">通知</label>
+        <div class="layui-input-block">
+            <textarea id="e_remind" name="e_remind" placeholder="请输入需要通知的邮箱，多个邮箱以逗号(，)间隔"
+                      class="layui-textarea"></textarea>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button type="reset" class="layui-btn layui-btn-primary" style="margin-left:20px">重置</button>
+        </div>
+    </div>
+
+</form>

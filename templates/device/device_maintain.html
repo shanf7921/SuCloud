@@ -1,0 +1,105 @@
+{% extends 'layout.html' %}
+{% load staticfiles %}
+{% block title %}
+    device list
+{% endblock %}
+{% block show %}
+    设备维保
+{% endblock %}
+
+{% block content %}
+    <br>
+    <button type="button" id="add-mold-btn" value="" style="margin-left: 10px" onclick="add_Record()">增加</button>
+    <br>
+    <div class="row" style="width: 100%">
+        <table class="table table-hover">
+            <tr>
+                <td></td>
+                <td>序号</td>
+                <td>设备编号</td>
+                <td>开始时间</td>
+                <td>结束时间</td>
+                <td>维修人</td>
+                <td style="text-indent:1em">详情</td>
+            </tr>
+            {% for device in device_repair %}
+                <tr>
+                    <td></td>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ device.dr_num }}</td>
+                    <td>{{ device.dr_start }}</td>
+
+                    <td>{{ device.dr_end }}</td>
+                    <td>{{ device.dr_user }}</td>
+                    <td>{{ device.dr_des }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+
+    </div>
+
+
+    <script type="text/javascript" src="{% static 'js/jquery.js' %}"></script>
+    <script type="text/javascript" src="{% static 'layer/layer.js' %}"></script>
+    <script type="text/javascript">
+        function add_Record() {
+            layer.open({
+                type: 1,
+                title: "新增维修记录",
+                skin: 'layui-layer-rim', //加上边框
+                area: ['400px', '350px'], //宽高
+                content: `{% include 'device/device_repair_select.html' %}
+             `,
+                btn: ["确定", "取消"],
+                yes: function () {
+                    var t_device = $("#t_device").find("option:selected").text();
+                    var dr_start = $("#dr_start").val();
+                    var dr_end = $("#dr_end").val();
+                    var dr_user = $("#dr_user").val();
+                    var dr_des = $("#dr_des").val();
+                    var data = {
+                        "t_device": t_device,
+                        "dr_start": dr_start,
+                        "dr_end": dr_end,
+                        "dr_user": dr_user,
+                        "dr_des": dr_des
+                    }
+                    $.ajax({
+                        url: "{% url "account:add_device_repair" %}",
+                        type: "POST",
+                        data: {"data": data},
+                        success: function (e) {
+                            if (e == "1") {
+                                parent.location.reload();
+                                layer.msg("添加成功");
+                            } else {
+                                layer.msg("添加失败")
+                            }
+                        },
+
+                    });
+                },
+                btn2: function () {
+                    layer.close();
+                }
+
+            });
+        }
+    </script>
+
+{% endblock %}
+{% block js %}
+
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+

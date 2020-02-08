@@ -1,14 +1,137 @@
 {% extends 'layout.html' %}
 {% load staticfiles %}
- {% block title %}
-生产管理
- {% endblock %}
+{% block title %}
+    生产管理
+{% endblock %}
 {% block show %}
     工单分发
 {% endblock %}
 
- {% block content %}
-    <h2>工单分发2</h2>
+{% block content %}
+
+    <div class="row" style="width: 100%">
+        <table class="table table-hover" style="text-align: center">
+            <tr>
+                <td></td>
+                <td>序号</td>
+                <td>产品名称</td>
+                <td>订单数量</td>
+                <td>订单状态</td>
+{#                <td>当前机台</td>#}
+                <td>开始时间</td>
+                <td>结束时间</td>
+                <td>客户</td>
+                <td>操作</td>
+            </tr>
+            {% for order in orders %}
+                <tr>
+                    <td></td>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ order.o_name }}</td>
+                    <td>{{ order.o_count }}</td>
+                    {% if order.od_order.last.od_active == True %}
+                            <td title="{{ order.od_order.last.d_k }}">{{ order.get_o_status_display }}</td>
+                        {% else %}
+                            <td>{{ order.get_o_status_display }}</td>
+                    {% endif %}
+                    <td>{{ order.o_start }}</td>
+                    <td>{{ order.o_end }}</td>
+                    <td>{{ order.o_customer }}</td>
+                    <td><a href="javascript:" name="order_dispense" onclick="order_dispense(this, {{ order.id }})">
+                        <span class="glyphicon glyphicon-save" style="margin-left: 20px"></span></a></td>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+    <script type="text/javascript" src="{% static 'js/jquery.js' %}"></script>
+    <script type="text/javascript" src="{% static 'layer/layer.js' %}"></script>
+    <script type="text/javascript">
+        function order_dispense(the, order_id) {
+            layer.open({
+                type: 1,
+                title: "工单分发",
+                zIndex: 100,
+                skin: 'layui-layer-rim', //加上边框
+                area: ['400px', '300px'], //宽高
+                content: `{% include 'produce/order_dispense.html' %}
+             `,
+                success: function () {
+                    laydate.render({
+                        elem: '#product_start' //指定元素
+                        // , type: 'datetime'
+                    });
+                    laydate.render({
+                        elem: '#product_end' //指定元素
+                        // , type: 'datetime'
+                    });
+                },
+                btn: ["确定", "取消"],
+                yes: function () {
+                    //var t_device = $("#t_device").find("option:selected").text();
+                    var device_id = $("#t_device").find("option:selected").val();
+                    var product_id = $("#product_id").val();
+                    var customer = $("#customer").val();
+                    var product_name = $("#product_name").val();
+                    var product_count = $("#product_count").val();
+                    var product_start = $("#product_start").val();
+                    var product_end = $("#product_end").val();
+                    var product_des = $("#product_des").val();
+                    var data = {
+                        "order_id": order_id,
+                        "device_id": device_id,
+                    }
+                    $.ajax({
+                        url: "{% url "account:order_dispense" %}",
+                        type: "POST",
+                        data: {"data": data},
+                        success: function (e) {
+                            if (e == "1") {
+                                parent.location.reload();
+                                layer.msg("分发成功");
+                            } else if (e == "3") {
+                                parent.location.reload();
+                                layer.msg("解除成功")
+                            } else if (e == "4") {
+                                parent.location.reload();
+                                layer.msg("无需解除")
+                            } else if (e == "5") {
+                                parent.location.reload();
+                                layer.msg("机台已被分配")
+                            } else {
+                                layer.msg("添加失败")
+                            }
+                        },
+
+                    });
+                },
+                btn2: function () {
+                    layer.close();
+                }
+
+            });
+        }
+    </script>
+
+    <script type="text/javascript" src="{% static 'laydate/laydate.js' %}"></script> <!-- 改成你的路径 -->
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('tr').each(function () {
+                var name = $(this).children('td').eq(4).text()
+                if (name == '未开始') {
+                    $(this).children('td').eq(4).css('background', '#ede21c')
+                } else if (name == '暂停中') {
+                    $(this).children('td').eq(4).css('background', '#8b9c9b')
+                } else if (name == '未分配') {
+                    $(this).children('td').eq(4).css('background', '#22dfff')
+                } else if (name == '生产中') {
+                    $(this).children('td').eq(4).css('background', '#18ff1b')
+                } else if (name == '已完成') {
+                    $(this).children('td').eq(4).css('background', '#ff2123')
+                }
+            });
+        })
+    </script>
+
 {% endblock %}
 
 

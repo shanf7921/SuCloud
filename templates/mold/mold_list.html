@@ -19,7 +19,7 @@ device list
           <td>模具寿命</td>
           <td>生产模数</td>
           <td>模具状态</td>
-          <td>维护人员</td>
+          <td>添加人</td>
           <td>操作</td>
       </tr>
       {% for mold in molds %}
@@ -90,7 +90,7 @@ device list
                 <div class="col-md-6 text-left">{{ form.m_user }}</div>
             </div>
 
-            <input type="submit" class="btn btn-primary btn-lg" value="确认">
+            <input type="submit" class="btn btn-primary btn-lg" id="add-mold-submit" value="确认">
             <input type="button" id="add-mold-quit" class="btn btn-primary btn-lg navbar-right" value="取消">
         </form>
     </div>
@@ -101,10 +101,10 @@ device list
      <script type="text/javascript" src="{% static 'layer/layer.js' %}"></script>
         <script type="text/javascript">
         function del_mold(the, mold_id) {
-        var name = $(mold_id).parent("tr").children("td").eq(3).text();
+        var name = $(the).parent("td").parent("tr").children("td").eq(2).text();
         layer.open({
             title: "删除模具",
-            content: '<div class="text-center" style="margin-top: 20px"><p>是否确定删除{'+name+'}模具</p></div>',
+            content: '<div class="text-center" style="margin-top: 20px"><p>是否确定删除'+name+'模具</p></div>',
             btn :["确定", "取消"],
             yes:function () {
                 $.ajax({

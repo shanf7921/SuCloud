@@ -1,66 +1,70 @@
 {% extends 'layout.html' %}
 {% load staticfiles %}
- {% block title %}
-报警管理
- {% endblock %}
+{% block title %}
+    报警管理
+{% endblock %}
+{% block extCSS %}
+    <link rel="stylesheet" href="{% static 'css/device/status_card.css' %}">
+{% endblock %}
 {% block show %}
-    报警规则
+    报警管理
 {% endblock %}
 
 {% block content %}
-     <div class="row" style="width: 100%">
-  <table class="table table-hover">
-      <tr>
-          <td></td>
-          <td>序号</td>
-          <td>设备编号</td>
-          <td>循环时间</td>
-          <td>开模时间</td>
-          <td>关模时间</td>
-          <td>储料时间</td>
-          <td>射出时间</td>
-          <td>射退时间</td>
-          <td>转保压时间</td>
-          <td>转保压位置</td>
-          <td>转保压压力</td>
-          <td>一段温度</td>
-          <td>二段温度</td>
-          <td>三段温度</td>
-          <td>四段温度</td>
-          <td>五段温度</td>
-          <td>开模位置</td>
-          <td>射出起点</td>
-          <td>射出终点</td>
-          <td>生产时间</td>
-      </tr>
-      {% for p in perrors %}
-       <tr>
-        <td></td>
-          <td>序号</td>
-          <td>p.t_device.d_num</td>
-          <td>循环时间</td>
-          <td>开模时间</td>
-          <td>关模时间</td>
-          <td>储料时间</td>
-          <td>射出时间</td>
-          <td>射退时间</td>
-          <td>转保压时间</td>
-          <td>转保压位置</td>
-          <td>转保压压力</td>
-          <td>一段温度</td>
-          <td>二段温度</td>
-          <td>三段温度</td>
-          <td>四段温度</td>
-          <td>五段温度</td>
-          <td>开模位置</td>
-          <td>射出起点</td>
-          <td>射出终点</td>
-          <td>生产时间</td>
-      </tr>
-      {% endfor %}
+    <div>
+        {% for device in devices %}
+            <div class="cardBox">
+                <div class="headerBox" style="background-color: #6c7fde;">
+                    <p>
+                        <a title="查看详情" style="cursor: pointer; color:white"
+                           onclick="viewXmInfo('${var.OMP_XM_ID}');">{{ device.d_num }}</a>
+                    </p>
+                </div>
+                <div class="bodyBox">
+                    <p>设备品牌：{{ device.d_brank }}</p>
+                    <p>设备型号：{{ device.d_model }}</p>
+                    <p>设备名称：{{ device.d_name }}</p>
+                    <p>报警状态：
+                        {% if device.paramerror.first.e_error == True %}
+                            <a href="javascript:void(0)" onclick="rule_change(this, {{ device.id }})" class="label label-success"
+                               style="border-radius: .25em;">开启</a>
+                        {% elif device.paramerror.first.e_error == False %}
+                            <a href="javascript:void(0)" onclick="rule_change(this, {{ device.id }})" class="label label-warning"
+                               style="border-radius: .25em;" >关闭</a>
+                        {% else %}
+                            <a href='{% url 'alarm:alarm_rule' %}' title="点击添加" class="label label-default"
+                               style="border-radius: .25em;">空白</a>
+                        {% endif %}
 
-  </table></div>
+                    </p>
+                    {#<p>异常状态：<span style="color:green">无异常</span></p>#}
+                    {#                    <p>加工量：1,817,375</p>#}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    <script type="text/javascript" src="{% static 'js/jquery.js' %}"></script>
+    <script type="text/javascript" src="{% static 'layer/layer.js' %}"></script>
+    <script type="text/javascript">
+        function rule_change(the, device_id) {
+            console.log(device_id)
+            $.ajax({
+                url: "{% url "account:rule_change" %}",
+                type: "POST",
+                data: {"device_id": device_id},
+                success: function (e) {
+                    if (e == "1") {
+                        parent.location.reload();
+                        layer.msg("修改成功");
+                    } else {
+                        layer.msg("操作失败");
+                    }
+                },
+            });
+        }
+    </script>
 {% endblock %}
+
 
 
 

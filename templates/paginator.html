@@ -1,22 +1,25 @@
-<div class="pagination" >
+<div>
+    <div class="pagination" style="float: left;">
     <span class="step-links" style="margin-left: 30px">
         {% if page.has_previous %}
-            <a href="?page={{ page.previous_page_number }}">Previous</a>
+            <a href="?page={{ page.previous_page_number }}">上一页</a>
         {% endif %}
         <span class="current">
             Page {{ page.number }} of {{ page.paginator.num_pages }}
         </span>
-    {% if page.has_next %}
-            <a href="?page={{ page.next_page_number }}">Next</a>
+        {% if page.has_next %}
+            <a href="?page={{ page.next_page_number }}">下一页</a>
         {% endif %}
 
     </span>
+
+    </div>
+
+    <div>
+        <span style="float:right;" class="step-links" >共计{{ page_len }}条记录</span>
+    </div>
+
 </div>
-
-
-
-
-
 
 
 

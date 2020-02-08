@@ -1,0 +1,24 @@
+.cardBox {
+    width: 300px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    text-align: left;
+    float: left;
+    margin-right:5px;
+    padding: 5px;
+    padding-top: 5px;
+}
+
+.headerBox {
+    color: #fff;
+    padding:5px;
+    font-size: 15px;
+    height:30px;
+}
+
+.bodyBox {
+    /*padding: 10px;*/
+}
+
+.bodyBox span {
+   float: left;
+}

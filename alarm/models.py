@@ -27,11 +27,13 @@ class ParamTime(models.Model):
     t_ejection1 = models.FloatField(default=0, verbose_name="射出起点", null=True)
     t_ejection2 = models.FloatField(default=0, verbose_name="射出终点", null=True)
     t_created = models.DateTimeField(default=timezone.now, verbose_name="添加时间", null=True)
+    # 代表此条记录是否有错误（在check_error中置为True）
     t_error = models.BooleanField(default=False)
 
 # 参数设定表
 class ParamSet(models.Model):
     t_device = models.ForeignKey(DeviceMd, related_name="paramset")
+    s_all = models.FloatField(default=0, verbose_name="循环时间", null=True)
 
     s_open_place1 = models.FloatField(default=0, verbose_name="开模一段位置", null=True)
     s_open_pressure1 = models.FloatField(default=0, verbose_name="开模一段压力", null=True)
@@ -107,6 +109,8 @@ class ParamError(models.Model):
     e_place = models.FloatField(blank=True, null=True, verbose_name="位置")
     e_pressure = models.FloatField(blank=True, null=True, verbose_name="压力")
     e_remind = models.CharField(blank=True, null=True, max_length=1000, verbose_name="提醒人")
+    # 代表此条警告通知是否开启，
+    e_error = models.BooleanField(default=True)
 """
 # 报警规则表
 class AlarmRule(models.Model):

@@ -1,0 +1,49 @@
+<form class="layui-form" action="">
+
+    <div class="layui-form-item" style="margin-top:5px">
+        <label class="layui-form-label" style="float: left; margin-left:20px; margin-right: 20px">设备编号</label>
+        <div class="layui-input-block">
+            <select name="t_device" id="t_device" class="layui-select" onmousedown="if(this.options.length>5){this.size=4}" onblur="this.size=0" onchange="this.size=0" style="z-index: 1;width: 150px;position: absolute">
+                <option value="" >请选择</option>
+                {% for device in devices %}
+                    <option value="" >{{ device.d_num }}</option>
+                {% endfor %}
+            </select>
+        </div>
+    </div>
+    <br>
+    <div class="layui-form-item" style="margin-top:5px">
+        <label class="layui-form-label" style="float: left; margin-left:20px; margin-right: 20px">开始时间</label>
+        <div class="layui-input-block">
+            <input type="text" id="dr_start" name="dr_start" placeholder="yyyy-MM-dd HH:mm:ss" autocomplete="off"
+                   class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item" style="margin-top:5px">
+        <label class="layui-form-label" style="float: left; margin-left:20px; margin-right: 20px">结束时间</label>
+        <div class="layui-input-block">
+            <input type="text" id="dr_end" name="dr_end" placeholder="yyyy-MM-dd HH:mm:ss" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item" style="margin-top:5px">
+        <label class="layui-form-label" style="float: left; margin-left:20px; margin-right: 20px">维修人员</label>
+        <div class="layui-input-block">
+            <input type="text" id="dr_user" name="dr_user" placeholder="" autocomplete="off"
+                   class="layui-input">
+        </div>
+    </div>
+
+    <div class="layui-form-item" style="margin-top:5px">
+        <label class="layui-form-label" style="float: left; margin-left:20px; margin-right: 20px">维修详情</label>
+        <div class="layui-input-block">
+            <textarea id="dr_des" name="dr_des" placeholder=""
+                      class="layui-textarea"></textarea>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button type="reset" class="layui-btn layui-btn-primary" style="margin-left:20px">重置</button>
+        </div>
+    </div>
+
+</form>

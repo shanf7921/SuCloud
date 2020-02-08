@@ -1,0 +1,19 @@
+
+<div class="panel window">
+
+    <div class="layui-form-item" style="margin-top:5px">
+        <label class="layui-form-label" style="float: left; margin-left:20px; margin-right: 20px">选择机台</label>
+        <div class="layui-input-block">
+            <select name="t_device" id="t_device" class="layui-select" onmousedown="if(this.options.length>8){this.size=8}" onblur="this.size=0" onchange="this.size=0" style="z-index: 1;width: 150px;position: absolute">
+                <option value="" >请选择</option>
+                <option value="0" >解除当前机台</option>
+                {% for device in devices %}
+                    <option value="{{ device.id }}" >{{ device.d_num }}</option>
+                {% endfor %}
+            </select>
+        </div>
+    </div>
+</div>
+
+
+

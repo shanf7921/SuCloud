@@ -10,4 +10,11 @@ $(document).ready(function () {
     adduserquit.addEventListener("click", function () {
         addacount.style.display = "none"
     }, false)
+
+     /*addsubmit = document.getElementById('add-mold-submit')
+    addsubmit.addEventListener("click", function () {
+        document.form.value.clear();
+    })*/
+
+
 })

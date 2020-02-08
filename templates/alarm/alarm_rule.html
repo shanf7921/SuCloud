@@ -43,7 +43,7 @@
      <script type="text/javascript" src="{% static 'layer/layer.js' %}"></script>
      <script type="text/javascript">
         function del_rule(the, rule_id) {
-        var name = $(rule_id).parent("tr").children("td").eq(3).text();
+        var name = $(the).parent("td").parent("tr").children("td").eq(2).text();
         console.log(name)
         layer.open({
             title: "删除规则",
@@ -73,68 +73,25 @@
     </script>
      <script type="text/javascript">
      function add_rule() {
+         var name = "DE03#"
          layer.open({
              type: 1,
              title: "规则",
              skin: 'layui-layer-rim', //加上边框
              area: ['400px', '350px'], //宽高
-             content: `
-              <form class="layui-form" action="">
-                  <div class="layui-form-item" style="margin-top:5px">
-                    <label class="layui-form-label" style="float: left; margin-left:20px; margin-right: 20px" >编号</label>
-                    <div class="layui-input-block" >
-                      <input type="text" id="t_device" name="t_device"  placeholder="请输入设备编号" autocomplete="off" class="layui-input">
-                    </div>
-                  </div>
+             content: `{% include 'alarm/select.html' %}
 
-                  <div class="layui-form-item" style="margin-top:5px">
-                    <label class="layui-form-label" style="float: left; margin-left:20px; margin-right: 20px" >时间</label>
-                    <div class="layui-input-block" >
-                      <input type="text" id="e_time" name="e_time"  placeholder="请输入时间允许波动值" autocomplete="off" class="layui-input">
-                    </div>
-                  </div>
-                  <div class="layui-form-item" style="margin-top:5px">
-                    <label class="layui-form-label" style="float: left; margin-left:20px; margin-right: 20px" >温度</label>
-                    <div class="layui-input-block" >
-                      <input type="text" id="e_tem" name="e_tem"  placeholder="请输入温度允许波动值" autocomplete="off" class="layui-input">
-                    </div>
-                  </div>
-                    <div class="layui-form-item" style="margin-top:5px">
-                    <label class="layui-form-label" style="float: left; margin-left:20px; margin-right: 20px" >位置</label>
-                    <div class="layui-input-block" >
-                      <input type="text" id="e_place" name="e_place"  placeholder="请输入位置允许波动值" autocomplete="off" class="layui-input">
-                    </div>
-                  </div>
-                  <div class="layui-form-item" style="margin-top:5px">
-                    <label class="layui-form-label" style="float: left; margin-left:20px; margin-right: 20px" >压力</label>
-                    <div class="layui-input-block" >
-                      <input type="text" id="e_pressure" name="e_pressure"  placeholder="请输入压力允许波动值" autocomplete="off" class="layui-input">
-                    </div>
-                  </div>
-                  <div class="layui-form-item" style="margin-top:5px">
-                    <label class="layui-form-label" style="float: left; margin-left:20px; margin-right: 20px">通知</label>
-                        <div class="layui-input-block" >
-                          <textarea id="e_remind" name="e_remind" placeholder="请输入需要通知的邮箱，多个邮箱以逗号(，)间隔" class="layui-textarea"></textarea>
-                        </div>
-                  </div>
-                  <div class="layui-form-item">
-                    <div class="layui-input-block">
-                      <button type="reset" class="layui-btn layui-btn-primary" style="margin-left:20px">重置</button>
-                    </div>
-                  </div>
-
-              </form>
              `,
              btn :["确定", "取消"],
                 yes:function () {
-                 var t_device = $("#t_device").val();
+                 var t_device = $("#t_device").find("option:selected").text();
                  var e_time = $("#e_time").val();
                  var e_tem = $("#e_tem").val();
                  var e_place = $("#e_place").val();
                  var e_pressure = $("#e_pressure").val();
                  var e_remind = $("#e_remind").val();
 
-                 console.log(e_time,e_tem);
+                 console.log(t_device,e_time,e_tem);
                  var data = {"t_device": t_device, "e_time": e_time, "e_tem": e_tem, "e_place": e_place, "e_pressure": e_pressure, "e_remind":e_remind}
                 $.ajax({
                     url: "{% url "account:add_rule" %}",

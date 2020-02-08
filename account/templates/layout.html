@@ -12,6 +12,9 @@
     <link rel="stylesheet" href="{% static 'css/nav.css' %} "/>
     <link rel="stylesheet" href="{% static 'css/rbac.css' %}">
     <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+{#    <script type="text/javascript" src="https://cdn.bootcss.com/echarts/4.4.0-rc.1/echarts.common.js"></script>#}
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts@4.6.0/dist/echarts.min.js"></script>
+
     <style>
         body {
             margin: 0;
@@ -59,6 +62,10 @@
         }
 
     </style>
+        {% block extCSS %}{% endblock %}
+    <style>
+        {% block ext_style %}{% endblock %}
+    </style>
 </head>
 <body>
 
@@ -72,14 +79,14 @@
         </div>
 
         <div class="left-menu left">
-            <a class="menu-item">设备管理</a>
-            <a class="menu-item">告警信息</a>
-            <a class="menu-item">系统管理</a>
+            <a class="menu-item" href="{% url 'device:device_status' %}">设备管理</a>
+            <a class="menu-item" href="{% url 'alarm:alarm_record' %}">告警信息</a>
+            <a class="menu-item" href="{% url 'system:permission' %}">系统管理</a>
             <div class="menu-item">
                 <span>使用说明</span>
                 <i class="fa fa-caret-down" aria-hidden="true"></i>
                 <div class="more-info">
-                    <a href="https://www.baidu.com" class="more-item">百度一下</a>
+                    <a href="https://www.baidu.com" class="more-item" target="_blank">百度一下</a>
                     <a href="#" class="more-item">谷歌一下</a>
                 </div>
             </div>
@@ -124,7 +131,7 @@
                 ID：{{ user.username }}
             </a>
             <a class="user-menu right">
-                姓名：{{ user.u_info.first.uname}}
+                用户：{{ user.u_info.first.uname}}
             </a>
         </div>
     </div>

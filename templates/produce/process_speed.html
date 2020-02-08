@@ -1,0 +1,11 @@
+{% if widthratio order.o_finish order.o_count 100 > 0 %}
+    123
+{% else %}
+    <div class="progress">
+        <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40"
+             aria-valuemin="0" aria-valuemax="100"
+             style="min-width:2em;width:{% widthratio order.o_finish order.o_count 100 %}%">
+            <span class="">{% widthratio order.o_finish order.o_count 100 %}% Complete (success)</span>
+        </div>
+    </div>
+{% endif %}

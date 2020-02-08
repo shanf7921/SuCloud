@@ -1,14 +1,207 @@
 {% extends 'layout.html' %}
 {% load staticfiles %}
- {% block title %}
-生产管理
- {% endblock %}
+{% block title %}
+    生产管理
+{% endblock %}
 {% block show %}
     工单管理
 {% endblock %}
 
- {% block content %}
-    <h2>工单</h2>
+{% block content %}
+    <div>
+        <button type="button" id="add-mold-btn" value="" style="margin-left: 10px" onclick="add_Record()">增加</button>
+        <br>
+    </div>
+    <div class="row" style="width: 100%">
+        <table class="table table-hover">
+            <tr>
+                <td></td>
+                <td style="text-align: center">序号</td>
+                <td style="text-align: center">订单名称</td>
+                <td style="text-align: center">产品名称</td>
+                <td style="text-align: center">完成数量</td>
+                <td style="text-align: center">订单状态</td>
+                <td style="text-align: center">所需天数</td>
+                <td style="text-align: center">开始时间</td>
+                <td style="text-align: center">结束时间</td>
+                <td style="text-align: center">客户</td>
+                <td>操作</td>
+            </tr>
+            {% for order in orders %}
+                <tr>
+                    <td></td>
+                    <td style="text-align: center">{{ forloop.counter }}</td>
+                    <td style="text-align: center">{{ order.o_id }}</td>
+                    <td style="text-align: center">{{ order.o_name }}</td>
+                    <td style="text-align: center">{{ order.o_count }}</td>
+                    <td style="text-align: center">{{ order.get_o_status_display }}</td>
+                    <td style="text-align: center">{{ order.o_day }}</td>
+                    <td style="text-align: center">{{ order.o_start }}</td>
+                    <td style="text-align: center">{{ order.o_end }}</td>
+                    <td style="text-align: center">{{ order.o_customer }}</td>
+                    <td><a href="javascript:" name="del_device" onclick="edit_order(this, {{ order.id }})">
+                        <span class="glyphicon glyphicon-wrench" style="margin-left: 20px"></span></a></td>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+
+    <script type="text/javascript" src="{% static 'js/jquery.js' %}"></script>
+    <script type="text/javascript" src="{% static 'layer/layer.js' %}"></script>
+    <script type="text/javascript">
+        function add_Record() {
+            layer.open({
+                type: 1,
+                title: "新增工单",
+                zIndex: 100,
+                skin: 'layui-layer-rim', //加上边框
+                area: ['600px', '300px'], //宽高
+                content: `{% include 'produce/order.html' %}
+             `,
+                success: function () {
+                    laydate.render({
+                        elem: '#product_start' //指定元素
+                        // , type: 'datetime'
+                    });
+                    laydate.render({
+                        elem: '#product_end' //指定元素
+                        // , type: 'datetime'
+                    });
+                },
+                btn: ["确定", "取消"],
+                yes: function () {
+                    var t_device = $("#t_device").find("option:selected").text();
+                    var product_id = $("#product_id").val();
+                    var customer = $("#customer").val();
+                    var product_name = $("#product_name").val();
+                    var product_count = $("#product_count").val();
+                    var product_start = $("#product_start").val();
+                    var product_end = $("#product_end").val();
+                    var product_des = $("#product_des").val();
+                    var data = {
+                        "product_id": product_id,
+                        "product_count": product_count,
+                        "customer": customer,
+                        "product_name": product_name,
+                        "product_start": product_start,
+                        "product_end": product_end,
+                        "product_des": product_des
+                    }
+                    $.ajax({
+                        url: "{% url "account:add_order" %}",
+                        type: "POST",
+                        data: {"data": data},
+                        success: function (e) {
+                            if (e == "1") {
+                                parent.location.reload();
+                                layer.msg("添加成功");
+                            } else if(e=='0'){
+                                layer.msg("工单号已存在")
+                            }else {
+                                layer.msg("添加失败")
+                            }
+                        },
+
+                    });
+                },
+                btn2: function () {
+                    layer.close();
+                }
+
+            });
+        }
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('tr').each(function () {
+                var name = $(this).children('td').eq(5).text()
+                if (name == '未开始') {
+                    $(this).children('td').eq(5).css('background', '#ede21c')
+                } else if (name == '暂停中') {
+                    $(this).children('td').eq(5).css('background', '#8b9c9b')
+                } else if (name == '未分配') {
+                    $(this).children('td').eq(5).css('background', '#22dfff')
+                } else if (name == '生产中') {
+                    $(this).children('td').eq(5).css('background', '#18ff1b')
+                } else if (name == '已完成') {
+                    $(this).children('td').eq(5).css('background', '#ff2123')
+                }
+            });
+        })
+    </script>
+    <script type="text/javascript">
+    function edit_order(the,order_id) {
+        var customer = $(the).parent("td").parent("tr").children("td").eq(9).text();
+        var product_count = $(the).parent("td").parent("tr").children("td").eq(4).text();
+        var product_start = $(the).parent("td").parent("tr").children("td").eq(7).text();
+        var product_end = $(the).parent("td").parent("tr").children("td").eq(8).text();
+        var product_des = $(the).parent("td").parent("tr").children("td").eq(3).text();
+            layer.open({
+                type: 1,
+                title: "修改工单",
+                zIndex: 100,
+                skin: 'layui-layer-rim', //加上边框
+                area: ['600px', '300px'], //宽高
+                content: `{% include 'produce/order_edit.html' %}
+             `,
+                success: function () {
+                    $("#customer_edit").val(customer);
+                    $("#product_count_edit").val(product_count);
+                    $("#product_start_edit").val(product_start);
+                    $("#product_end_edit").val(product_end);
+                    $("#product_des_edit").val();
+                    laydate.render({
+                        elem: '#product_start_edit' //指定元素
+                        // , type: 'datetime'
+                    });
+                    laydate.render({
+                        elem: '#product_end_edit' //指定元素
+                        // , type: 'datetime'
+                    });
+                },
+                btn: ["确定", "取消"],
+                yes: function () {
+                    var product_id = $("#product_id").val();
+                    var customer = $("#customer_edit").val();
+                    var product_name = $("#product_name").val();
+                    var product_count = $("#product_count_edit").val();
+                    var product_start = $("#product_start_edit").val();
+                    var product_end = $("#product_end_edit").val();
+                    var product_des = $("#product_des_edit").val();
+                    var data = {
+                        "order_id": order_id,
+                        "product_count": product_count,
+                        "customer": customer,
+                        "product_name": product_name,
+                        "product_start": product_start,
+                        "product_end": product_end,
+                        "product_des": product_des
+                    }
+                    $.ajax({
+                        url: "{% url "account:edit_order" %}",
+                        type: "POST",
+                        data: {"data": data},
+                        success: function (e) {
+                            if (e == "1") {
+                                parent.location.reload();
+                                layer.msg("修改成功");
+                            } else {
+                                layer.msg("修改失败")
+                            }
+                        },
+
+                    });
+                },
+                btn2: function () {
+                    layer.close();
+                }
+
+            });
+        }
+    </script>
+    <script type="text/javascript" src="{% static 'laydate/laydate.js' %}"></script> <!-- 改成你的路径 -->
+
+
 {% endblock %}
 
 

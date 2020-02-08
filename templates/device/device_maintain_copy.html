@@ -1,0 +1,190 @@
+{% extends 'layout.html' %}
+{% load staticfiles %}
+ {% block title %}
+device list
+ {% endblock %}
+{% block show %}
+    设备维保
+    <a href="" style="float: right">添加记录</a>
+{% endblock %}
+
+ {% block content %}
+     <div class="row" style="width: 100%">
+  <table class="table table-hover">
+      <tr>
+          <td></td>
+          <td>序号</td>
+          <td>设备编号</td>
+          <td>设备名称</td>
+
+          <td>设备状态</td>
+          <td>添加人</td>
+          <td style="text-indent:5em">操作</td>
+      </tr>
+      {% for device in devices %}
+      <tr>
+          <td></td>
+          <td>{{ forloop.counter }}</td>
+          <td>{{ device.d_num }}</td>
+          <td id="{{ device.id }}">{{ device.d_name }}</td>
+
+          <td>{{ device.get_d_status_display }}</td>
+          <td>{% if device.d_user.username == "admin" %}超级管理员
+          {% else %}{{ device.d_user.u_info.all.first.uname}}{% endif %}
+              </td>
+          <td><a href="javascript:" name="mold_repair" onclick="mold_repair(this, {{ device.id }})">
+                 <span class="" style="margin-left: 20px">维修</span>
+                </a>
+              <a href="javascript:" name="mold_maintain" onclick="mold_maintain(this, {{ device.id }})">
+                 <span class="" style="margin-left: 20px">保养</span>
+                </a>
+              <a href="javascript:" name="mold_end" onclick="mold_end(this, {{ device.id }})">
+                 <span class="" style="margin-left: 20px">结束</span>
+                </a>
+          </td>
+      </tr>
+      {% endfor %}
+  </table>
+
+  </div>
+     <br>
+     <script type="text/javascript" src="{% static 'js/jquery.js' %}"></script>
+     <script type="text/javascript" src="{% static 'layer/layer.js' %}"></script>
+     <script type="text/javascript">
+        function mold_repair(the, mold_id) {
+        var name = $(the).parent("td").parent("tr").children("td").eq(2).text();
+        layer.open({
+            type: 1,
+            title: "维修模具"+name,
+            skin: 'layui-layer-rim', //加上边框
+            area: ['400px', '300px'], //宽高
+            content: `{% include 'mold/input.html' %}
+             `,
+            btn :["确定", "取消"],
+            yes:function () {
+                var mr_user = $("#mr_user").val();
+                var mr_appear = $("#mr_appear").val();
+                var mr_method = $("#mr_method").val();
+                var mr_des = $("#mr_des").val();
+                var data = {"mr_user": mr_user, "mr_appear": mr_appear, "mr_method": mr_method, "mr_des": mr_des}
+                $.ajax({
+                    url: "{% url "account:mold_repair" %}",
+                    type: "POST",
+                    data: {"mold_id": mold_id, "data": data},
+                    success: function (e){
+                        if(e=="1"){
+                            parent.location.reload();
+                            layer.msg("开始维修");
+                        }else if(e=="5"){
+                            parent.location.reload();
+                            layer.msg("模具处于非空闲状态，无法维修");
+                        }else{
+                            layer.msg("失败")
+                        }
+                    },
+                });
+            },
+            btn2:function () {
+                layer.close();
+            }
+        });
+
+    }
+
+
+    function mold_maintain(the, mold_id) {
+        var name = $(mold_id).parent("tr").children("td").eq(3).text;
+
+        layer.open({
+            title: "维修模具",
+            content: '<div class="text-center" style="margin-top: 20px"><p>是否确定开始保养模具</p></div>',
+            btn :["确定", "取消"],
+            yes:function () {
+                $.ajax({
+                    url: "{% url "account:mold_maintain" %}",
+                    type: "POST",
+                    data: {"mold_id": mold_id},
+                    success: function (e){
+                        if(e=="1"){
+                            parent.location.reload();
+                            layer.msg("开始保养");
+                        }else if(e=="5"){
+                            layer.msg("模具处于非空闲状态，无法保养");
+                        }else{
+                            layer.msg("失败")
+                        }
+                    },
+                });
+            },
+            btn2:function () {
+                layer.close();
+            }
+        });
+
+    }
+
+
+    function mold_end(the, mold_id) {
+        var name = $(mold_id).parent("tr").children("td").eq(4).text();
+        layer.open({
+            title: "结束维修/保养",
+            content: '<div class="text-center" style="margin-top: 20px"><p>是否结束</p></div>',
+            btn :["确定", "取消"],
+            yes:function () {
+                $.ajax({
+                    url: "{% url "account:mold_end" %}",
+                    type: "POST",
+                    data: {"mold_id": mold_id},
+                    success: function (e){
+                        if(e=="1"){
+                            parent.location.reload();
+                            layer.msg("维修结束");
+                        }else if(e=="4"){
+                            parent.location.reload();
+                            layer.msg("保养结束");
+                        }else if(e=="3"){
+                            parent.location.reload();
+                            layer.msg("模具未进行维修/保养，不需要结束");
+                        }else{
+                            layer.msg("操作失败");
+                        }
+                    },
+                });
+            },
+            btn2:function () {
+                layer.close();
+            }
+        });
+
+    }
+        </script>
+
+     <script type="text/javascript">
+     $(document).ready(function () {
+             $('tr').each(function(){
+                 var name = $(this).children('td').eq(4).text()
+                 if(name=='维修'){
+                     $(this).children('td').eq(4).css('color','#ED0D00')
+                 }
+                 if(name=='保养'){
+                     $(this).children('td').eq(4).css('color','#5cff7a')
+                 }
+             });
+         })
+     </script>
+ {% endblock %}
+{% block js %}
+
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+

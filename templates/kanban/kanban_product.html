@@ -1,0 +1,105 @@
+{% extends 'layout.html' %}
+{% load staticfiles %}
+{% block title %}
+    生产看板
+{% endblock %}
+{% block extCSS %}
+
+{% endblock %}
+{% block show %}
+    生产看板
+{% endblock %}
+{% block content %}
+<div style="margin:10px">
+<div id="order_chart" style="width: 400px;height:250px;float: left;background: #00F7DE"></div>
+<div id="device_chart" style="width: 400px;height:250px;float: left;background: #81f7bf"></div>
+</div>
+    <!-- 订单图表 -->
+    <script>
+    // 基于准备好的dom，初始化echarts实例
+        var myChart = echarts.init(document.getElementById('order_chart'));
+
+        // 指定图表的配置项和数据
+        var option = {
+            title: {
+                text: '订单状态'
+            },
+            tooltip: {},
+            legend: {
+                data:['数量']
+            },
+            xAxis: {
+                data: ["未开始","暂停中","生产中","已完成","未分配"]
+            },
+            yAxis: {
+                type: 'value',
+                splitArea:{show: true,}
+            },
+            series: [{
+                name: '数量',
+                type: 'bar',
+                data: [{{ status1 }}, {{ status2 }}, {{ status3 }}, {{ status4 }}, {{ status5 }}],
+                itemStyle:{
+                    normal:{
+                        color: '#33adcc',
+                        label:{
+                            show: true,
+                            position: 'top',
+                        }
+                    },
+                }
+            }]
+        };
+
+        // 使用刚指定的配置项和数据显示图表。
+        myChart.setOption(option);
+    </script>
+
+    <!-- 设备图表 -->
+    <script>
+    // 基于准备好的dom，初始化echarts实例
+        var myChart = echarts.init(document.getElementById('device_chart'));
+
+        // 指定图表的配置项和数据
+        var option = {
+            title: {
+                text: '设备状态'
+            },
+            tooltip: {},
+            legend: {
+                data:['数量']
+            },
+            xAxis: {
+                data: ["运行","待机","离线"]
+            },
+            yAxis: {
+                type: 'value',
+                splitArea:{show: true,}
+            },
+            series: [{
+                name: '数量',
+                type: 'bar',
+                data: [{{ d_status1 }}, {{ d_status2 }}, {{ d_status3 }}],
+                itemStyle:{
+                    normal:{
+                        color: function (params) {
+                            var colorList = ['#44cc23','#c7cc1c', '#b7c4cc'];
+                            return colorList[params.dataIndex]
+
+                        },
+                        label:{
+                            show: true,
+                            position: 'top',
+                        }
+                    }
+                }
+            }]
+        };
+
+        // 使用刚指定的配置项和数据显示图表。
+        myChart.setOption(option);
+    </script>
+{% endblock %}
+
+{% block js %}
+{% endblock %}

@@ -39,6 +39,8 @@ urlpatterns = [
     url(r'^alarm/', include('alarm.urls', namespace="alarm", app_name="alarm")),
     # 工单管理
     url(r'^produce/', include('produce.urls', namespace="produce", app_name="produce")),
+    # 看板管理
+    url(r'^kanban/', include('kanban.urls', namespace="kanban", app_name="kanban")),
 
 
 ]

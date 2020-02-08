@@ -14,7 +14,6 @@ from alarm.models import ParamTime, ParamError, ParamSet
 
 def alarm_rule1(request):
     m = DeviceMd.objects.filter(id=2).first()
-    print(m.d_num)
     pe = ParamError.objects.filter(t_device=m).first()
     ps = ParamSet.objects.filter(t_device=m).first()
     pts = ParamTime.objects.filter(t_device=m)
@@ -42,30 +41,35 @@ def alarm_rule1(request):
 
 def alarm_rule(request):
     rules = ParamError.objects.all()
-    return render(request, 'alarm/alarm_rule.html', {"rules": rules})
+    devices = DeviceMd.objects.all()
+    return render(request, 'alarm/alarm_rule.html', {"rules": rules, "devices":devices})
 
 
 def alarm_warm(request):
-    generate_param()
-    return render(request, 'alarm/alarm_warm.html')
+    devices = DeviceMd.objects.all()
+    return render(request, "alarm/alarm_warm.html", {"devices": devices})
 
 
 def alarm_record(request):
-    perrors_list = ParamTime.objects.filter(t_error=True)
-    paginator = Paginator(perrors_list, 8)
+    perrors_list = ParamTime.objects.filter(t_error=True).order_by('-id')
+    page_len = len(perrors_list)
+    count_page = 6
+    paginator = Paginator(perrors_list, count_page)
     page = request.GET.get('page')
     try:
         current_page = paginator.page(page)
         perrors = current_page.object_list
     except PageNotAnInteger:
         current_page = paginator.page(1)
+        page = 1
         perrors = current_page.object_list
     except EmptyPage:
         current_page = paginator.page(paginator.num_pages)
         perrors = current_page.object_list
-    return render(request, 'alarm/alarm_record.html', {"perrors": perrors, "page":current_page})
+    start = (int(page) - 1) * count_page
+    return render(request, 'alarm/alarm_record.html', {"perrors": perrors, "page":current_page, "start":start, "page_len":page_len})
 
-def send_mail_qq(request, num, param, ctime, remind=["AngusCelt@outlook.com", "anf57@hotmail.com"]):
+def send_mail_qq(num, param, ctime, remind=["AngusCelt@outlook.com", "anf57@hotmail.com"]):
     # 服务器
     SMTPserver = "smtp.qq.com"
     # 发送邮件的地址
@@ -146,37 +150,42 @@ def generate_param():
             print('-------------5')
 
 def check_error(request):
+    # 得到所有机台（后续筛选出 运行机台）
     device_list = DeviceMd.objects.all()
     for m in device_list:
-        pe = ParamError.objects.filter(t_device=m).first()
-        remind = pe.e_remind.split()  # 获取e_remind字段，并转为列表
-        ps = ParamSet.objects.filter(t_device=m).first()
-        pts = ParamTime.objects.filter(t_device=m)
-        for pt in pts:
-            time.sleep(2)
-            if pe.e_place and ps.t_open_place:
-                place1 = abs(ps.t_open_place - pt.t_open_place)
-                if place1 > pe.e_place:
-                    pt.t_error = True  # 将错误记录标记
-                    pt.save()  # 修改数据库后进行保存
-                    ctime = pt.t_created
-                    ctime = str(ctime)
-                    send_mail_qq(request, m.d_num, '位置', ctime, remind)
-                    print(pt.id,m.d_num)
-                    print('位置 超出误差')
-                    print('---------------')
-            if pe.e_tem:
-                tem1 = abs(ps.t_tem1 - pt.t_tem1)
-                tem2 = abs(ps.t_tem2 - pt.t_tem2)
-                tem3 = abs(ps.t_tem3 - pt.t_tem3)
-                tem4 = abs(ps.t_tem4 - pt.t_tem4)
-                tem5 = abs(ps.t_tem5 - pt.t_tem5)
-                if tem1 > pe.e_tem or tem2 > pe.e_tem or tem3 > pe.e_tem or tem4 > pe.e_tem or tem5 > pe.e_tem:
-                    pt.t_error = True  # 将错误记录标记
-                    pt.save()  # 修改数据库后进行保存
-                    ctime = pt.t_created
-                    ctime = str(ctime)[0:-6]
-                    send_mail_qq(request, m.d_num, '温度', ctime, remind)
-                    print(pt.id, m.d_num)
-                    print('温度 超出误差')
-                    print('---------------')
+        pe = ParamError.objects.filter(t_device=m, e_error=True).first()
+        # 如果pe存在说明此台机器设置并启动了报警规则
+        if pe:
+            remind = pe.e_remind.split()  # 获取e_remind字段，并转为列表
+            ps = ParamSet.objects.filter(t_device=m).first()  # 获取机台参数的设定值
+            pts = ParamTime.objects.filter(t_device=m)  # 获取机台参数的实时变化值
+            for pt in pts:
+                time.sleep(2)
+                # 如果设置了位置参数 则进行校验
+                if pe.e_place and ps.t_open_place:
+                    place1 = abs(ps.t_open_place - pt.t_open_place)
+                    if place1 > pe.e_place:
+                        pt.t_error = True  # 将错误记录标记
+                        pt.save()  # 修改数据库后进行保存
+                        ctime = pt.t_created
+                        ctime = str(ctime)
+                        send_mail_qq(request, m.d_num, '位置', ctime, remind)
+                        print(pt.id, m.d_num)
+                        print('位置 超出误差')
+                        print('---------------')
+                # 如果设置了温度参数 则进行校验
+                if pe.e_tem:
+                    tem1 = abs(ps.t_tem1 - pt.t_tem1)
+                    tem2 = abs(ps.t_tem2 - pt.t_tem2)
+                    tem3 = abs(ps.t_tem3 - pt.t_tem3)
+                    tem4 = abs(ps.t_tem4 - pt.t_tem4)
+                    tem5 = abs(ps.t_tem5 - pt.t_tem5)
+                    if tem1 > pe.e_tem or tem2 > pe.e_tem or tem3 > pe.e_tem or tem4 > pe.e_tem or tem5 > pe.e_tem:
+                        pt.t_error = True  # 将错误记录标记
+                        pt.save()  # 修改数据库后进行保存
+                        ctime = pt.t_created
+                        ctime = str(ctime)[0:-6]
+                        send_mail_qq(request, m.d_num, '温度', ctime, remind)
+                        print(pt.id, m.d_num)
+                        print('温度 超出误差')
+                        print('---------------')

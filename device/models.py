@@ -24,6 +24,12 @@ class DeviceMd(models.Model):
     def __str__(self):
         return self.d_num
 
+class DeviceRepair(models.Model):
+    dr_num = models.ForeignKey(DeviceMd, related_name="repair")
+    dr_start = models.CharField(max_length=100, blank=True, verbose_name="开始时间")
+    dr_end = models.CharField(max_length=100, null=True, blank=True, verbose_name="结束时间")
+    dr_user = models.CharField(max_length=100, blank=True, verbose_name="维修人员")
+    dr_des = models.CharField(max_length=300, blank=True, verbose_name="备注")
 
 
 

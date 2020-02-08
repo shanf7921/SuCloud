@@ -1,17 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="aa5fa995-e20b-42c8-bb13-04652f241221" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
+    <list default="true" id="aa5fa995-e20b-42c8-bb13-04652f241221" name="Default Changelist" comment="报警2019-12-23">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SuCloud/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/SuCloud/__init__.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SuCloud/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/SuCloud/settings.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SuCloud/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/SuCloud/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/account/templates/layout.html" beforeDir="false" afterPath="$PROJECT_DIR$/account/templates/layout.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/account/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/account/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/account/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/account/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/alarm/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/alarm/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/alarm/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/alarm/views.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/device/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/device/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/device/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/device/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/device/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/device/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mold/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/mold/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mold/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/mold/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/produce/migrations/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/produce/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/produce/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/produce/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/produce/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/produce/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/produce/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rbac/middleware/rbac.py" beforeDir="false" afterPath="$PROJECT_DIR$/rbac/middleware/rbac.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/js/mold_list.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/js/mold_list.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/alarm/alarm_record.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/alarm/alarm_record.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/alarm/alarm_rule.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/alarm/alarm_rule.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/alarm/alarm_warm.html" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/device/device_list.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/device/device_list.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/mold/maintain.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/mold/maintain.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/mold/mold_list.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/mold/mold_list.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/mold/mold_record.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/mold/mold_record.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/paginator.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/paginator.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/produce/produce_dispense.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/produce/produce_dispense.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/produce/produce_order.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/produce/produce_order.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/produce/produce_speed.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/produce/produce_speed.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/system/permission.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/system/permission.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -51,12 +74,15 @@
   <component name="DjangoConsoleOptions" custom-start-script="import sys; print('Python %s on %s' % (sys.version, sys.platform))&#10;import django; print('Django %s' % django.get_version())&#10;sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;if 'setup' in dir(django): django.setup()&#10;import django_manage_shell; django_manage_shell.run(PROJECT_ROOT)">
     <option name="myCustomStartScript" value="import sys; print('Python %s on %s' % (sys.version, sys.platform))&#10;import django; print('Django %s' % django.get_version())&#10;sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;if 'setup' in dir(django): django.setup()&#10;import django_manage_shell; django_manage_shell.run(PROJECT_ROOT)" />
   </component>
+  <component name="FavoritesManager">
+    <favorites_list name="SuCloud" />
+  </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="HTML File" />
-        <option value="CSS File" />
         <option value="JavaScript File" />
+        <option value="CSS File" />
+        <option value="HTML File" />
         <option value="Python Script" />
       </list>
     </option>
@@ -85,22 +111,22 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/templates/produce" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/templates/device" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="settings.editor.selected.configurable" value="terminal" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="E:\Code\Cloud\SuCloud\templates\produce" />
-      <recent name="E:\Code\Cloud\SuCloud\templates\alarm" />
-      <recent name="E:\Code\Cloud\SuCloud\alarm" />
-      <recent name="E:\Code\Cloud\SuCloud\templates\mold" />
-      <recent name="E:\Code\Cloud\SuCloud\templates" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="E:\Code\Cloud\SuCloud\rbac\templatetags" />
       <recent name="E:\Code\Cloud\SuCloud\rbac\templates\rbac" />
       <recent name="E:\Code\Cloud\SuCloud\rbac" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="E:\Code\Cloud\SuCloud\templates\device" />
+      <recent name="E:\Code\Cloud\SuCloud\static" />
+      <recent name="E:\Code\Cloud\SuCloud\static\js" />
+      <recent name="E:\Code\Cloud\SuCloud\templates\kanban" />
+      <recent name="E:\Code\Cloud\SuCloud\static\css\kanban" />
     </key>
   </component>
   <component name="RunManager" selected="Python.views">
@@ -299,8 +325,36 @@
       <workItem from="1576919561893" duration="3637000" />
       <workItem from="1576974345403" duration="2549000" />
       <workItem from="1577070213052" duration="33466000" />
-      <workItem from="1577148183047" duration="14969000" />
+      <workItem from="1577148183047" duration="20609000" />
+      <workItem from="1577340244799" duration="3304000" />
+      <workItem from="1577363435295" duration="6094000" />
+      <workItem from="1577408171476" duration="10037000" />
+      <workItem from="1577504860399" duration="1180000" />
+      <workItem from="1578273130590" duration="10027000" />
+      <workItem from="1578370250975" duration="23281000" />
+      <workItem from="1578444251299" duration="17186000" />
+      <workItem from="1578552445692" duration="2257000" />
+      <workItem from="1578630668762" duration="1945000" />
+      <workItem from="1578811955196" duration="221000" />
+      <workItem from="1580088877706" duration="21142000" />
+      <workItem from="1580174461006" duration="18216000" />
+      <workItem from="1580256990066" duration="8076000" />
+      <workItem from="1580361915327" duration="14936000" />
+      <workItem from="1580436577369" duration="6327000" />
+      <workItem from="1580452526975" duration="56981000" />
+      <workItem from="1580638394148" duration="12622000" />
+      <workItem from="1580652637314" duration="9528000" />
+      <workItem from="1580708566038" duration="23093000" />
+      <workItem from="1580780317680" duration="2645000" />
     </task>
+    <task id="LOCAL-00001" summary="报警2019-12-23">
+      <created>1577173776456</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1577173776456</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -319,19 +373,32 @@
       </map>
     </option>
   </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="报警2019-12-23" />
+    <option name="LAST_COMMIT_MESSAGE" value="报警2019-12-23" />
+  </component>
   <component name="WindowStateProjectService">
-    <state x="273" y="0" key="CommitChangelistDialog2" timestamp="1577173770393">
+    <state x="273" y="0" key="CommitChangelistDialog2" timestamp="1580707253692">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="273" y="0" key="CommitChangelistDialog2/0.0.1366.728/1366.0.1536.824@0.0.1366.728" timestamp="1577173770393" />
-    <state x="463" y="118" key="FileChooserDialogImpl" timestamp="1577081523630">
+    <state x="273" y="0" key="CommitChangelistDialog2/0.0.1366.728/1366.0.1536.824@0.0.1366.728" timestamp="1580707253692" />
+    <state x="463" y="118" key="FileChooserDialogImpl" timestamp="1580638654004">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="463" y="118" key="FileChooserDialogImpl/0.0.1366.728/1366.0.1536.824@0.0.1366.728" timestamp="1577081523630" />
-    <state x="354" y="186" key="com.intellij.ide.util.TipDialog" timestamp="1577148204321">
+    <state x="463" y="118" key="FileChooserDialogImpl/0.0.1366.728/1366.0.1536.824@0.0.1366.728" timestamp="1580638654004" />
+    <state x="521" y="250" width="357" height="239" key="com.intellij.database.actions.DdlActions$DeleteProvider2$1" timestamp="1580456847260">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="354" y="186" key="com.intellij.ide.util.TipDialog/0.0.1366.728/1366.0.1536.824@0.0.1366.728" timestamp="1577148204321" />
+    <state x="521" y="250" width="357" height="239" key="com.intellij.database.actions.DdlActions$DeleteProvider2$1/0.0.1366.728@0.0.1366.728" timestamp="1580456847260" />
+    <state x="354" y="186" key="com.intellij.ide.util.TipDialog" timestamp="1580780320059">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="354" y="186" key="com.intellij.ide.util.TipDialog/0.0.1366.728/1366.0.1536.824@0.0.1366.728" timestamp="1580780320059" />
+    <state x="354" y="186" key="com.intellij.ide.util.TipDialog/0.0.1366.728@0.0.1366.728" timestamp="1580652786781" />
+    <state x="272" y="0" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1580543678446">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="272" y="0" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/0.0.1366.728@0.0.1366.728" timestamp="1580543678446" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/SuCloud$views.coverage" NAME="views Coverage Results" MODIFIED="1575540861071" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/alarm" />

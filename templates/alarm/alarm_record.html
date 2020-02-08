@@ -37,7 +37,7 @@
       {% for p in perrors %}
        <tr>
         <td></td>
-          <td>{{forloop.counter}}</td>
+          <td>{{forloop.counter|add:start}}</td>
           <td>{{p.t_device.d_num}}</td>
           <td>{{p.t_all}}</td>
           <td>{{p.t_open_mold}}</td>

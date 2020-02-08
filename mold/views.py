@@ -6,7 +6,8 @@ from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
 
 from mold.forms import MoldForm
-from mold.models import Mold
+from mold.models import Mold, Repair
+
 
 def mold_list(request):
     molds = Mold.objects.all()
@@ -26,5 +27,5 @@ def mold_maintain(request):
     return render(request, 'mold/maintain.html', {"molds": molds})
 
 def mold_record(request):
-    molds = Mold.objects.all()
-    return render(request, 'mold/maintain.html', {"molds": molds})
+    mold_records = Repair.objects.all()
+    return render(request, 'mold/mold_record.html', {"mold_records": mold_records})

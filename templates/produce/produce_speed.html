@@ -1,14 +1,140 @@
 {% extends 'layout.html' %}
 {% load staticfiles %}
- {% block title %}
-生产管理
- {% endblock %}
+{% block title %}
+    工单进度
+{% endblock %}
 {% block show %}
     工单进度
 {% endblock %}
 
- {% block content %}
-    <h2>工单进度3</h2>
+{% block content %}
+    <div class="row" style="width: 100%">
+        <table class="table table-hover" style="text-align: center">
+            <tr>
+                <td></td>
+                <td style="text-align: center">序号</td>
+                <td style="text-align: center">订单名称</td>
+                <td style="text-align: center">产品名称</td>
+                <td style="text-align: center">客户</td>
+                <td style="text-align: center">完成率</td>
+                <td style="text-align: center">预计天数</td>
+                <td style="text-align: center">创建时间</td>
+                <td style="text-align: center">交货时间</td>
+                <td style="text-align: center">状态</td>
+            </tr>
+            {% for order in orders %}
+                <tr>
+                    <td></td>
+                    <td style="text-align: center">{{ forloop.counter }}</td>
+                    <td style="text-align: center">{{ order.o_id }}</td>
+                    <td style="text-align: center">{{ order.o_name }}</td>
+                    <td style="text-align: center">{{ order.o_customer }}</td>
+{#                    <td style="text-align: center">{% include 'produce/process_speed.html' %}</td>#}
+                    {#                    <td style="text-align: center">{% widthratio order.o_finish order.o_count 100 %}%</td>#}
+                    <td style="text-align: center">
+                        <div class="progress">
+                            <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40"
+                                 aria-valuemin="0" aria-valuemax="100" style="min-width:1.7em;width:{% widthratio order.o_finish order.o_count 100 %}%">
+                                <span class="" style="width: 100px">{% widthratio order.o_finish order.o_count 100 %}% &emsp;&emsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                            </div>
+                        </div>
+                    </td>
+                    <td style="text-align: center">{{ order.o_day }}</td>
+                    <td style="text-align: center">{{ order.o_create }}</td>
+                    <td style="text-align: center">{{ order.o_end }}</td>
+{#                    <td style="text-align: center">{{ order.get_o_status_display }}</td>#}
+                    <td style="text-align: center">
+                        <span class="label label-default">{{ order.get_o_status_display }}</span>
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+
+    <script type="text/javascript" src="{% static 'js/jquery.js' %}"></script>
+    <script type="text/javascript" src="{% static 'layer/layer.js' %}"></script>
+    <script type="text/javascript">
+        function add_Record() {
+            layer.open({
+                type: 1,
+                title: "新增工单",
+                zIndex: 100,
+                skin: 'layui-layer-rim', //加上边框
+                area: ['600px', '300px'], //宽高
+                content: `{% include 'produce/order.html' %}
+             `,
+                success: function () {
+                    laydate.render({
+                        elem: '#product_start' //指定元素
+                        // , type: 'datetime'
+                    });
+                    laydate.render({
+                        elem: '#product_end' //指定元素
+                        // , type: 'datetime'
+                    });
+                },
+                btn: ["确定", "取消"],
+                yes: function () {
+                    var t_device = $("#t_device").find("option:selected").text();
+                    var product_id = $("#product_id").val();
+                    var customer = $("#customer").val();
+                    var product_name = $("#product_name").val();
+                    var product_count = $("#product_count").val();
+                    var product_start = $("#product_start").val();
+                    var product_end = $("#product_end").val();
+                    var product_des = $("#product_des").val();
+                    var data = {
+                        "product_id": product_id,
+                        "product_count": product_count,
+                        "customer": customer,
+                        "product_name": product_name,
+                        "product_start": product_start,
+                        "product_end": product_end,
+                        "product_des": product_des
+                    }
+                    $.ajax({
+                        url: "{% url "account:add_order" %}",
+                        type: "POST",
+                        data: {"data": data},
+                        success: function (e) {
+                            if (e == "1") {
+                                parent.location.reload();
+                                layer.msg("添加成功");
+                            } else {
+                                layer.msg("添加失败")
+                            }
+                        },
+
+                    });
+                },
+                btn2: function () {
+                    layer.close();
+                }
+
+            });
+        }
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('tr').each(function () {
+                var name = $(this).children('td').eq(9).children('span').text()
+                if (name == '未开始') {
+                    $(this).children('td').eq(9).children('span').attr('class', 'label label-warning')
+                } else if (name == '暂停中') {
+                    $(this).children('td').eq(9).children('span').attr('class', 'label label-default')
+                } else if (name == '未分配') {
+                    $(this).children('td').eq(9).children('span').attr('class', 'label label-primary')
+                } else if (name == '生产中') {
+                    $(this).children('td').eq(9).children('span').attr('class', 'label label-success')
+                } else if (name == '已完成') {
+                    $(this).children('td').eq(9).children('span').attr('class', 'label label-danger')
+                }
+            });
+        })
+    </script>
+    <script type="text/javascript" src="{% static 'laydate/laydate.js' %}"></script> <!-- 改成你的路径 -->
+
+
 {% endblock %}
 
 

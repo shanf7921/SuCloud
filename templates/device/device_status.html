@@ -1,0 +1,150 @@
+{% extends 'layout.html' %}
+{% load staticfiles %}
+{% block title %}
+    设备状态
+{% endblock %}
+{% block extCSS %}
+    <link rel="stylesheet" href="{% static 'css/device/status_card.css' %}">
+{% endblock %}
+{% block show %}
+    设备状态
+{% endblock %}
+
+{% block content %}
+    <div>
+        {% for device in devices %}
+            <div class="cardBox">
+                 <div class="headerBox" style="background-color: #6c7fde;">
+                    <p>
+                        <a title="查看详情" style="cursor: pointer; color:white"
+                           onclick="viewXmInfo('${var.OMP_XM_ID}');">{{ device.d_num }}</a>
+                    </p>
+                </div>
+                <div class="bodyBox">
+                    {% if device.d_brank == "海天" %}
+                        <img src="{% static 'images/HaiTian1.png' %}" alt="" style="height:80px">
+                    {% else %}
+                        <img src="{% static 'images/Tederic.png' %}" alt="" style="height:80px">
+                    {% endif %}
+
+                    <p>设备品牌：{{ device.d_brank }}</p>
+                    <p>设备型号：{{ device.d_model }}</p>
+                    <p>设备名称：{{ device.d_name }}</p>
+                    <p>设备状态：
+                        {% if device.get_d_status_display == "运行" %}
+                            <a href="javascript:void(0)" class="label label-success" onclick="change_status1(this, {{ device.id }})"
+                           style="border-radius: .25em;">{{ device.get_d_status_display }}</a>
+                        {% elif device.get_d_status_display == "待机"%}
+                            <a href="javascript:void(0)" class="label label-warning" onclick="change_status2(this, {{ device.id }})"
+                           style="border-radius: .25em;">{{ device.get_d_status_display }}</a>
+                        {% else %}
+                            <a href="javascript:void(0)" class="label label-default" onclick="change_status3(this, {{ device.id }})"
+                           style="border-radius: .25em;">{{ device.get_d_status_display }}</a>
+                        {% endif %}
+
+                    </p>
+                    <p>异常状态：<span style="color:green">无异常</span></p>
+{#                    <p>加工量：1,817,375</p>#}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+     <script type="text/javascript" src="{% static 'js/jquery.js' %}"></script>
+     <script type="text/javascript" src="{% static 'layer/layer.js' %}"></script>
+    <script>
+    function change_status1(the, device_id) {
+        layer.open({
+            title: "修改设备状态",
+            content: `{% include 'device/change_status_1.html' %}`,
+            btn :["确定", "取消"],
+            yes:function () {
+                var change_status1 = $("#change_status1").find("option:selected").val();
+                $.ajax({
+                    url: "{% url "account:change_status" %}",
+                    type: "POST",
+                    data: {"device_id": device_id, "change_status": change_status1},
+                    success: function (e){
+                        if(e=="1"){
+                            parent.location.reload();
+                            layer.msg("修改成功");
+                        }else{
+                            layer.msg("修改失败")
+                        }
+                    },
+                });
+            },
+            btn2:function () {
+                layer.close();
+            }
+        });
+    }
+
+    function change_status2(the, device_id) {
+        layer.open({
+            title: "修改设备状态",
+            content: `{% include 'device/change_status_2.html' %}`,
+            btn :["确定", "取消"],
+            yes:function () {
+                var change_status2 = $("#change_status2").find("option:selected").val();
+                $.ajax({
+                    url: "{% url "account:change_status" %}",
+                    type: "POST",
+                    data: {"device_id": device_id, "change_status": change_status2},
+                    success: function (e){
+                        if(e=="1"){
+                            parent.location.reload();
+                            layer.msg("修改成功");
+                        }else{
+                            layer.msg("修改失败")
+                        }
+                    },
+                });
+            },
+            btn2:function () {
+                layer.close();
+            }
+        });
+    }
+
+    function change_status3(the, device_id) {
+        layer.open({
+            title: "修改设备状态",
+            content: `{% include 'device/change_status_3.html' %}`,
+            btn :["确定", "取消"],
+            yes:function () {
+                var change_status3 = $("#change_status3").find("option:selected").val();
+                $.ajax({
+                    url: "{% url "account:change_status" %}",
+                    type: "POST",
+                    data: {"device_id": device_id, "change_status": change_status3},
+                    success: function (e){
+                        if(e=="1"){
+                            parent.location.reload();
+                            layer.msg("修改成功");
+                        }else{
+                            layer.msg("修改失败")
+                        }
+                    },
+                });
+            },
+            btn2:function () {
+                layer.close();
+            }
+        });
+    }
+    </script>
+
+
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+

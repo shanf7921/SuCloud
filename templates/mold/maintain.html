@@ -17,8 +17,8 @@ device list
           <td>模具名称</td>
 
           <td>模具状态</td>
-          <td>维护人员</td>
-          <td>操作</td>
+          <td>添加人</td>
+          <td style="text-indent:5em">操作</td>
       </tr>
       {% for mold in molds %}
       <tr>
@@ -47,22 +47,34 @@ device list
      <br>
      <script type="text/javascript" src="{% static 'js/jquery.js' %}"></script>
      <script type="text/javascript" src="{% static 'layer/layer.js' %}"></script>
-        <script type="text/javascript">
+     <script type="text/javascript">
         function mold_repair(the, mold_id) {
-        var name = $(mold_id).parent("tr").children("td").eq(3).text();
+        var name = $(the).parent("td").parent("tr").children("td").eq(2).text();
         layer.open({
-            title: "维修模具",
-            content: '<div class="text-center" style="margin-top: 20px"><p>是否确定开始维修{'+name+'}模具</p></div>',
+            type: 1,
+            title: "维修模具"+name,
+            skin: 'layui-layer-rim', //加上边框
+            area: ['400px', '300px'], //宽高
+            content: `{% include 'mold/input.html' %}
+             `,
             btn :["确定", "取消"],
             yes:function () {
+                var mr_user = $("#mr_user").val();
+                var mr_appear = $("#mr_appear").val();
+                var mr_method = $("#mr_method").val();
+                var mr_des = $("#mr_des").val();
+                var data = {"mr_user": mr_user, "mr_appear": mr_appear, "mr_method": mr_method, "mr_des": mr_des}
                 $.ajax({
                     url: "{% url "account:mold_repair" %}",
                     type: "POST",
-                    data: {"mold_id": mold_id},
+                    data: {"mold_id": mold_id, "data": data},
                     success: function (e){
                         if(e=="1"){
                             parent.location.reload();
                             layer.msg("开始维修");
+                        }else if(e=="5"){
+                            parent.location.reload();
+                            layer.msg("模具处于非空闲状态，无法维修");
                         }else{
                             layer.msg("失败")
                         }
@@ -93,6 +105,8 @@ device list
                         if(e=="1"){
                             parent.location.reload();
                             layer.msg("开始保养");
+                        }else if(e=="5"){
+                            layer.msg("模具处于非空闲状态，无法保养");
                         }else{
                             layer.msg("失败")
                         }
@@ -121,9 +135,15 @@ device list
                     success: function (e){
                         if(e=="1"){
                             parent.location.reload();
-                            layer.msg("操作成功");
+                            layer.msg("维修结束");
+                        }else if(e=="4"){
+                            parent.location.reload();
+                            layer.msg("保养结束");
+                        }else if(e=="3"){
+                            parent.location.reload();
+                            layer.msg("模具未进行维修/保养，不需要结束");
                         }else{
-                            layer.msg("操作失败")
+                            layer.msg("操作失败");
                         }
                     },
                 });
@@ -135,6 +155,20 @@ device list
 
     }
         </script>
+
+     <script type="text/javascript">
+     $(document).ready(function () {
+             $('tr').each(function(){
+                 var name = $(this).children('td').eq(4).text()
+                 if(name=='维修'){
+                     $(this).children('td').eq(4).css('color','#ED0D00')
+                 }
+                 if(name=='保养'){
+                     $(this).children('td').eq(4).css('color','#5cff7a')
+                 }
+             });
+         })
+     </script>
  {% endblock %}
 {% block js %}
 
