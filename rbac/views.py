@@ -47,7 +47,8 @@ def user(request):
         else:
             return HttpResponse("抱歉，注册失败")
     else:
+        role_list = Role.objects.all()
         user_list = UserInfo.objects.all()
         user_form = RegistrationForm()
         userinfo_form = UserInfoForm()
-        return render(request, "system/user.html", {"user_list": user_list, "form": user_form, "userinfo": userinfo_form})
+        return render(request, "system/user.html", {"user_list": user_list, "form": user_form, "userinfo": userinfo_form, "role_list":role_list})

@@ -39,6 +39,43 @@ def user_login(request):
         login_form = LoginForm()
         return render(request, "account/login.html", {"form": login_form})
 
+@csrf_exempt
+def add_user(request):
+    try:
+        user_num = request.POST.get('data[user_num]')
+        user_name = request.POST.get('data[user_name]')
+        user_password = request.POST.get('data[user_password]')
+        user_tel = request.POST.get('data[user_tel]')
+        user_email = request.POST.get('data[user_email]')
+        user_role = request.POST.get('data[user_role]')
+
+        role = Role.objects.filter(title=user_role).first()
+        print(role)
+        regist_user = RegistrationForm()
+        regist_user.username = user_num
+        regist_user.password = user_password
+        regist_user.password2 = user_password
+        # if regist_user.is_valid():
+        new_user = regist_user.save(commit=False)
+        new_user.username = user_num
+        new_user.set_password(regist_user.password)
+        new_user.save()
+        new_profile = UserInfo()
+        new_profile.uname = user_name
+        new_profile.phone = user_tel
+        new_profile.email = user_email
+        new_profile.user = new_user
+        new_profile.save()
+        if role:
+            new_profile.roles.add(role)
+        print(user_num,user_name,user_password,user_tel,user_email,user_role)
+        return HttpResponse("1")
+    except Exception as e:
+        print(e)
+        return HttpResponse("2")
+
+
+
 def register(request):
     if request.method == "POST":
         user_form = RegistrationForm(request.POST)
@@ -50,8 +87,7 @@ def register(request):
             new_profile = userinfo_form.save(commit=False)
             new_profile.user = new_user
             new_profile.save()
-            UserInfo.objects.create(user=new_user)
-            return HttpResponse("successfully")
+            return render(request, "account/register.html", {"form": user_form, "userinfo": userinfo_form})
         else:
             return HttpResponse("抱歉，注册失败")
     else:
@@ -67,6 +103,20 @@ def del_device(request):
     try:
         line = DeviceMd.objects.get(id=device_id)
         line.delete()
+        return HttpResponse("1")
+    except:
+        return HttpResponse("2")
+
+@csrf_exempt
+def del_user(request):
+    user_id = request.POST["user_id"]
+    try:
+        line = UserInfo.objects.get(id=user_id)
+        u_id = line.user.id
+        line.delete()
+        user = User.objects.get(id=u_id)
+        user.delete()
+
         return HttpResponse("1")
     except:
         return HttpResponse("2")

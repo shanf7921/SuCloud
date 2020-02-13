@@ -1,0 +1,66 @@
+<div>
+        <form action="">
+            <table style="border-collapse:separate; border-spacing:0px 10px;">
+                <tbody>
+                <tr style="">
+                    <th style="width:85px;overflow:hidden;noWrap:true">
+                        <lable style="float:right;width:90px;text-align:right">登录ID</lable>
+                    </th>
+                    <td><span style="width: 149px; height: 20px;">
+                        <input type="text" id="user_num" placeholder="GD20200101xxxx">
+                        <span></span>
+                    </span>
+
+                    </td>
+                   <th style="width:85px;overflow:hidden;noWrap:true">
+                        <lable style="float:right;width:90px;text-align:right">姓名</lable>
+                    </th>
+                    <td><span style="width: 149px; height: 20px;">
+                        <input type="text" id="user_name">
+                        <span></span>
+                        </span>
+                    </td>
+                </tr>
+                <tr style="margin-bottom: 10px">
+                    <th style="width:85px;overflow:hidden;noWrap:true">
+                        <lable style="float:right;width:90px;text-align:right">密码</lable>
+                    </th>
+                    <td>
+                        <input type="text" id="user_password" placeholder="">
+                        <span></span>
+                    </td>
+                   <th style="width:85px;overflow:hidden;noWrap:true">
+                        <lable style="float:right;width:90px;text-align:right">手机</lable>
+                    </th>
+                    <td>
+                        <input type="text" id="user_tel">
+                        <span></span>
+                    </td>
+                </tr>
+                <tr>
+                    <th style="width:85px;overflow:hidden;noWrap:true">
+                        <lable style="float:right;width:90px;text-align:right">邮箱</lable>
+                    </th>
+                    <td>
+                        <input type="text" id="user_email">
+                        <span></span>
+                    </td>
+                   <th style="width:85px;overflow:hidden;noWrap:true">
+                        <lable style="float:right;width:90px;text-align:right" >角色</lable>
+                    </th>
+                    <td>
+                        <select name="user_role" id="user_role" class="layui-select" onmousedown="if(this.options.length>5){this.size=5};" onblur="this.size=0" onchange="this.size=0" style="z-index: 1;top:82px;width: 175px;position: absolute">
+                            <option value="" >请选择</option>
+                            {% for role in role_list %}
+                                <option value="{{ role.id }}" >{{ role.title }}</option>
+                            {% endfor %}
+                        </select>
+                    </td>
+                </tr>
+
+                </tbody>
+            </table>
+        </form>
+    </div>
+
+
