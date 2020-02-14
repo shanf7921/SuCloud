@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'alarm',
     'produce',
     'kanban',
+    'report',
 ]
 
 MIDDLEWARE = [

@@ -41,6 +41,8 @@ urlpatterns = [
     url(r'^produce/', include('produce.urls', namespace="produce", app_name="produce")),
     # 看板管理
     url(r'^kanban/', include('kanban.urls', namespace="kanban", app_name="kanban")),
+    # 报表管理
+    url(r'^report/', include('report.urls', namespace="report", app_name="report")),
 
 
 ]
