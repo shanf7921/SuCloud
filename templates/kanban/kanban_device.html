@@ -56,8 +56,8 @@
                         <div style="width: 70%;float: left">
                             <span style="float: left">产品：</span><br>
                             <span style="float: left">工单:</span><br>
-                            <span style="float: left">创建时间：</span><br>
-                            <span style="float: left">交货时间：</span><br>
+                            <span style="float: left">创建：</span><br>
+                            <span style="float: left">客户：</span><br>
                         </div>
                         <div style="float:right">
                             <canvas class="process" width="60px" height="60px">0%</canvas>
@@ -133,7 +133,12 @@
             })
         })
     </script>
-
+<script language="JavaScript">
+    function myrefresh() {
+       window.location.reload();
+    }
+    setTimeout('myrefresh()',1000*60*10); //指定1秒刷新一次
+    </script>
 {% endblock %}
 
 

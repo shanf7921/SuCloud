@@ -2,10 +2,22 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="aa5fa995-e20b-42c8-bb13-04652f241221" name="Default Changelist" comment="报警2019-12-23">
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SuCloud/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/SuCloud/__init__.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SuCloud/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/SuCloud/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SuCloud/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/SuCloud/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/produce/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/produce/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/account/task.py" beforeDir="false" afterPath="$PROJECT_DIR$/account/task.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/account/templates/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/account/templates/login.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/account/view/auth.py" beforeDir="false" afterPath="$PROJECT_DIR$/account/view/auth.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/alarm/alarm_warm.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/alarm/alarm_warm.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/kanban/kanban_device.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/kanban/kanban_device.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/kanban/kanban_order.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/kanban/kanban_order.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/kanban/kanban_product.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/kanban/kanban_product.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/produce/produce_order.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/produce/produce_order.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/system/permission.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/system/permission.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/system/user.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/system/user.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/system/user_register.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/system/user_register.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -23,23 +35,7 @@
     <option name="HIDDEN_KINDS">
       <set />
     </option>
-    <expand>
-      <path>
-        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
-        <item name="db" type="feb32156:DbDataSourceImpl" />
-      </path>
-      <path>
-        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
-        <item name="db" type="feb32156:DbDataSourceImpl" />
-        <item name="schemas" type="d4e8921:DatabaseStructure$FamilyGroup" />
-      </path>
-      <path>
-        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
-        <item name="db" type="feb32156:DbDataSourceImpl" />
-        <item name="schemas" type="d4e8921:DatabaseStructure$FamilyGroup" />
-        <item name="main: schema" type="981a47c2:SqliteImplModel$Schema" />
-      </path>
-    </expand>
+    <expand />
     <select />
   </component>
   <component name="DjangoConsoleOptions" custom-start-script="import sys; print('Python %s on %s' % (sys.version, sys.platform))&#10;import django; print('Django %s' % django.get_version())&#10;sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;if 'setup' in dir(django): django.setup()&#10;import django_manage_shell; django_manage_shell.run(PROJECT_ROOT)">
@@ -53,8 +49,8 @@
       <list>
         <option value="JavaScript File" />
         <option value="CSS File" />
-        <option value="HTML File" />
         <option value="Python Script" />
+        <option value="HTML File" />
       </list>
     </option>
   </component>
@@ -78,11 +74,12 @@
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="DatabaseDriversLRU" value="mysql" />
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/templates/device" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/rbac/service" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="settings.editor.selected.configurable" value="terminal" />
   </component>
@@ -93,11 +90,11 @@
       <recent name="E:\Code\Cloud\SuCloud\rbac" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="E:\Code\Cloud\SuCloud\templates\device" />
+      <recent name="E:\Code\Cloud\SuCloud\rbac\service" />
       <recent name="E:\Code\Cloud\SuCloud\static" />
+      <recent name="E:\Code\Cloud\SuCloud\templates\device" />
       <recent name="E:\Code\Cloud\SuCloud\static\js" />
       <recent name="E:\Code\Cloud\SuCloud\templates\kanban" />
-      <recent name="E:\Code\Cloud\SuCloud\static\css\kanban" />
     </key>
   </component>
   <component name="RunManager" selected="Python.views">
@@ -318,7 +315,27 @@
       <workItem from="1580708566038" duration="23093000" />
       <workItem from="1580780317680" duration="2645000" />
       <workItem from="1581586490637" duration="7965000" />
-      <workItem from="1581674252018" duration="928000" />
+      <workItem from="1581674252018" duration="1159000" />
+      <workItem from="1581677684281" duration="194000" />
+      <workItem from="1581738780990" duration="613000" />
+      <workItem from="1581767307270" duration="2732000" />
+      <workItem from="1581819018004" duration="1876000" />
+      <workItem from="1581822255028" duration="906000" />
+      <workItem from="1581826287719" duration="3974000" />
+      <workItem from="1581856426144" duration="441000" />
+      <workItem from="1582005346442" duration="910000" />
+      <workItem from="1582804277167" duration="772000" />
+      <workItem from="1583588087470" duration="1716000" />
+      <workItem from="1583632228648" duration="1339000" />
+      <workItem from="1583803356963" duration="3453000" />
+      <workItem from="1583895105283" duration="5045000" />
+      <workItem from="1583972915663" duration="2816000" />
+      <workItem from="1584066267043" duration="13895000" />
+      <workItem from="1584160548398" duration="8116000" />
+      <workItem from="1584236127990" duration="9528000" />
+      <workItem from="1584322701877" duration="3527000" />
+      <workItem from="1584529223542" duration="1202000" />
+      <workItem from="1584700695765" duration="543000" />
     </task>
     <task id="LOCAL-00001" summary="报警2019-12-23">
       <created>1577173776456</created>
@@ -351,22 +368,31 @@
     <option name="LAST_COMMIT_MESSAGE" value="报警2019-12-23" />
   </component>
   <component name="WindowStateProjectService">
+    <state x="275" y="22" key="#Inspections" timestamp="1584194762286">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="275" y="22" key="#Inspections/0.0.1366.728/1366.0.1920.1040@0.0.1366.728" timestamp="1584194762286" />
+    <state x="275" y="22" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1584190535027">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="275" y="22" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1366.728/1366.0.1920.1040@0.0.1366.728" timestamp="1584190535027" />
     <state x="273" y="0" key="CommitChangelistDialog2" timestamp="1581593891852">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="273" y="0" key="CommitChangelistDialog2/0.0.1366.728/1366.0.1536.824@0.0.1366.728" timestamp="1581593891852" />
-    <state x="463" y="118" key="FileChooserDialogImpl" timestamp="1580638654004">
+    <state x="463" y="118" key="FileChooserDialogImpl" timestamp="1581677880577">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="463" y="118" key="FileChooserDialogImpl/0.0.1366.728/1366.0.1536.824@0.0.1366.728" timestamp="1580638654004" />
+    <state x="463" y="118" key="FileChooserDialogImpl/0.0.1366.728/1366.0.1536.824@0.0.1366.728" timestamp="1581677880577" />
     <state x="521" y="250" width="357" height="239" key="com.intellij.database.actions.DdlActions$DeleteProvider2$1" timestamp="1580456847260">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="521" y="250" width="357" height="239" key="com.intellij.database.actions.DdlActions$DeleteProvider2$1/0.0.1366.728@0.0.1366.728" timestamp="1580456847260" />
-    <state x="354" y="186" key="com.intellij.ide.util.TipDialog" timestamp="1581674253737">
+    <state x="354" y="186" key="com.intellij.ide.util.TipDialog" timestamp="1584700718409">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="354" y="186" key="com.intellij.ide.util.TipDialog/0.0.1366.728/1366.0.1536.824@0.0.1366.728" timestamp="1581674253737" />
+    <state x="354" y="186" key="com.intellij.ide.util.TipDialog/0.0.1366.728/1366.0.1536.824@0.0.1366.728" timestamp="1582005372768" />
+    <state x="354" y="186" key="com.intellij.ide.util.TipDialog/0.0.1366.728/1366.0.1920.1040@0.0.1366.728" timestamp="1584700718409" />
     <state x="354" y="186" key="com.intellij.ide.util.TipDialog/0.0.1366.728@0.0.1366.728" timestamp="1580652786781" />
     <state x="272" y="0" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1580543678446">
       <screen x="0" y="0" width="1366" height="728" />

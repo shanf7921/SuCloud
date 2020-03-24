@@ -1,19 +1,21 @@
 {% extends 'layout.html' %}
 {% load staticfiles %}
 {% block show %}
-    角色列表
+    权限管理
 {% endblock %}
 {% block content %}
     <div id="permissionManageDiv" style="margin-left: 10px; display: block;">
         <div>
             <h4 style="margin-top: 15px;">角色管理</h4>
             <hr style="margin-top: 5px;"/>
+            <button type="button" id="add_role" onclick="add_role()" value="+增加角色" style="margin-bottom: 10px">+增加角色</button>
+            <br>
             <select name="rolename" id="rolename" class="selectpicker" onchange="get_permissions()"  data-live-search="true">
                 {% for role in role_list %}
                     <option value="{{ role.title }}">{{ role.title }}</option>
                 {% endfor %}
             </select>
-            <button type="button" id="add_role" onclick="add_role()" value="+增加角色">+增加角色</button>
+
             <hr/>
         </div>
         <div>

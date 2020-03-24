@@ -13,6 +13,8 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
+
+
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
@@ -24,6 +26,7 @@ SECRET_KEY = 'wo@1gw_8gl-em&hgc9ou21qbbi1@udil_=k$+k_!&d6$=kn=*-'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
+
 
 ALLOWED_HOSTS = ["*"]
 
@@ -89,7 +92,16 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
+    },
+
+    # 'mysql': {
+    #         'ENGINE': 'django.db.backends.mysql',
+    #         'NAME': 'SuCloud',
+    #         'USER': 'root',
+    #         'PASSWORD': 'password',
+    #         'HOST': 'localhost',
+    #         'PORT': '3306',
+    #     }
 }
 
 
@@ -176,3 +188,19 @@ CELERY_RESULT_SERIALIZER = 'json'
 
 # celery时区设置，使用settings中TIME_ZONE同样的时区
 CELERY_TIMEZONE = TIME_ZONE
+
+""" 
+import django_redis
+CACHES = {
+    'default': {
+        'BACKEND': 'django_redis.cache.RedisCache',
+        'LOCATION': 'redis://127.0.0.1:6379/0',
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+            "PASSWORD": "123456",
+        },
+    },
+}
+
+"""
+

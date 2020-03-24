@@ -75,7 +75,7 @@ def generate_param(device_id, ps_id):
     ps = ParamSet.objects.get(id=ps_id)
 
     g.t_device = device
-    g.t_all = random.choice((ps.s_all + r_time, ps.s_all - r_time))
+    g.t_all = round(random.choice((ps.s_all + r_time, ps.s_all - r_time)), 2)
     t_open_mold = random.choice((ps.t_open_mold + r_place, ps.t_open_mold - r_place))
     g.t_open_mold = float('%.2f' % t_open_mold)
     t_close_mold = random.choice((ps.t_close_mold + r_place, ps.t_close_mold - r_place))
@@ -83,28 +83,29 @@ def generate_param(device_id, ps_id):
     g.t_stock = round(random.choice((ps.t_stock + r_time, ps.t_stock - r_time)), 2)
     g.t_ejection = round(random.choice((ps.t_ejection + r_time, ps.t_ejection - r_time)), 2)
     g.t_back = round(random.choice((ps.t_back + r_time, ps.t_back - r_time)), 2)
-    g.t_change = random.choice((ps.t_change + r_time, ps.t_change - r_time))
+    g.t_change = round(random.choice((ps.t_change + r_time, ps.t_change - r_time)), 2)
 
-    g.t_change_place = random.choice((ps.t_change_place + r_place, ps.t_change_place - r_place))
-    g.t_change_pressure = random.choice((ps.t_change_pressure + r_pre, ps.t_change_pressure - r_pre))
+    g.t_change_place = round(random.choice((ps.t_change_place + r_place, ps.t_change_place - r_place)), 2)
+    g.t_change_pressure = round(random.choice((ps.t_change_pressure + r_pre, ps.t_change_pressure - r_pre)), 2)
 
-    g.t_tem1 = round(random.choice((ps.t_tem1 + r_tem, ps.t_tem1 - r_tem)))
-    g.t_tem2 = round(random.choice((ps.t_tem2 + r_tem, ps.t_tem2 - r_tem)))
-    g.t_tem3 = round(random.choice((ps.t_tem3 + r_tem, ps.t_tem3 - r_tem)))
-    g.t_tem4 = round(random.choice((ps.t_tem4 + r_tem, ps.t_tem4 - r_tem)))
-    g.t_tem5 = round(random.choice((ps.t_tem5 + r_tem, ps.t_tem5 - r_tem)))
+    g.t_tem1 = round(random.choice((ps.t_tem1 + r_tem, ps.t_tem1 - r_tem)), 2)
+    g.t_tem2 = round(random.choice((ps.t_tem2 + r_tem, ps.t_tem2 - r_tem)), 2)
+    g.t_tem3 = round(random.choice((ps.t_tem3 + r_tem, ps.t_tem3 - r_tem)), 2)
+    g.t_tem4 = round(random.choice((ps.t_tem4 + r_tem, ps.t_tem4 - r_tem)), 2)
+    g.t_tem5 = round(random.choice((ps.t_tem5 + r_tem, ps.t_tem5 - r_tem)), 2)
 
-    g.t_open_place = random.choice((ps.t_open_place + r_place, ps.t_open_place - r_place))
+    g.t_open_place = round(random.choice((ps.t_open_place + r_place, ps.t_open_place - r_place)), 2)
     g.t_ejection1 = round(random.choice((ps.t_ejection1 + r_place, ps.t_ejection1 - r_place)), 2)
     g.t_ejection2 = round(random.choice((ps.t_ejection2 + r_place, ps.t_ejection2 - r_place)), 2)
     g.save()
+    """
     print('%s生产一件产品，周期为:%d秒' % (device.d_num, g.t_all))
     print('三段温度：%s,开模位置：%s,转保压压力：%s,注射时间：%s'
           % (g.t_tem3, g.t_open_place, g.t_change_pressure, g.t_ejection))
-
+    """
 
 def check_error(device_id):
-    print('检测此条数据是否超出误差...')
+    # print('检测此条数据是否超出误差...')
     # 得到当前设备
     device = DeviceMd.objects.get(id=device_id)
     pe = ParamError.objects.filter(t_device=device, e_error=True).first()

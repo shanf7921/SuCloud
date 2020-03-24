@@ -32,7 +32,6 @@ class AuthView(ViewSetMixin, APIView):
                 obj = UserInfo.objects.filter(user_id=uclass.user_id).first()
                 # 查询当前用户的所有角色
                 role = obj.roles.all()
-                # 定义空列表
                 permission_list = []
                 for i in role:
                     # 查看当前用户所有角色的所有权限
@@ -41,7 +40,7 @@ class AuthView(ViewSetMixin, APIView):
                         permission_list.append(j.url)
                 response.code = 1000
 
-                # 增加session
+                # 用户所具备的权限列表写入session
                 request.session['url'] = permission_list
                 init_permission(request, obj)
         except Exception as e:
